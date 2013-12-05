@@ -4,3 +4,12 @@
 *.jar
 *.war
 *.ear
+*.zip
+
+# Non-Needed Things #
+.classpath
+.project
+/META-INF
+/minecraft.src
+/.settings
+/bin
