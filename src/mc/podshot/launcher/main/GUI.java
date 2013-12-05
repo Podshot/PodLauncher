@@ -1,6 +1,5 @@
 package mc.podshot.launcher.main;
 
-import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
