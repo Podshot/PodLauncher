@@ -47,7 +47,7 @@ public class GUI extends JPanel implements ActionListener, PropertyChangeListene
     class Task extends SwingWorker<Void, Void> {
 
 		@Override
-		protected Void doInBackground() throws Exception {
+		protected void doInBackground() throws Exception {
 			Random random = new Random();
 			int progress = 0;
 			setProgress(0);
