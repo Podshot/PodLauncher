@@ -19,9 +19,10 @@ import sk.tomsik68.mclauncher.impl.login.legacy.LegacyProfile;
 import sk.tomsik68.mclauncher.impl.versions.mcassets.MCAssetsVersion;
 import sk.tomsik68.mclauncher.impl.versions.mcassets.MCAssetsVersionList;
 
-public class launch {
+public class LaunchMC {
 
-	public launch(final String username, final String Password) {
+	public static void launch(final String username, char[] Password) {
+		final String pass = String.valueOf(Password);
 		final MinecraftInstance mc = new MinecraftInstance(new File("testmc"));
 		MCAssetsVersionList list = new MCAssetsVersionList();
 		list.addObserver(new IObserver<IVersion>() {
@@ -29,7 +30,7 @@ public class launch {
 			@Override
 			public void onUpdate(IObservable<IVersion> observable, IVersion changed) {
 				if(changed.getId().equalsIgnoreCase("11w47a")){
-					IProfile profile = new LegacyProfile(username, Password);
+					IProfile profile = new LegacyProfile(username, pass);
 					LegacyLoginService lls = new LegacyLoginService();
 					ISession session = null;
 					try {
@@ -96,7 +97,7 @@ public class launch {
 		}
 	}
 
-	protected boolean isProcessAlive(Process proc) {
+	protected static boolean isProcessAlive(Process proc) {
 		try {
 			proc.exitValue();
 			return true;
