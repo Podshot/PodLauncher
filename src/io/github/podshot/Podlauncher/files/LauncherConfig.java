@@ -35,6 +35,7 @@ public class LauncherConfig {
 			
 			profileList.add(defaultProfile);
 			mainJSON.put("Profiles", profileList);
+			mainJSON.put("Last Profile", "{Default Profile Name}");
 			
 			try {
 				FileWriter json = new FileWriter(launcherConfig);

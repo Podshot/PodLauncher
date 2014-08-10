@@ -15,7 +15,6 @@ public class MainLauncher {
 		if (!(launcherFolder.exists())) {
 			launcherFolder.mkdir();
 		}
-		
 		new LauncherConfig();
 		
 		LauncherConfig.addProfile("Profile2", "Username2", "Password2", "Directory2", "Version2");
