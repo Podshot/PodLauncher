@@ -35,30 +35,39 @@ public class CheckMojangServers {
 		
 	}
 	
-	private boolean convertStatusToGreen(String stat) {
+	private ServerStatus convertStatusToGreen(String stat) {
 		if (stat.equals("green")) {
-			return true;
+			return ServerStatus.ONLINE;
 		}
-		return false;
+		
+		if (stat.equals("yellow")) {
+			return ServerStatus.UNSTABLE;
+		}
+		return ServerStatus.OFFLINE;
 	}
 
-	public boolean getMinecraft_net() {
+	public ServerStatus getMinecraft_net() {
 		return this.convertStatusToGreen(this.minecraft_net);
 	}
 	
-	public boolean getSessions() {
+	public ServerStatus getSessions() {
 		return this.convertStatusToGreen(this.sessions);
 	}
 	
-	public boolean getAccounts() {
+	public ServerStatus getAccounts() {
 		return this.convertStatusToGreen(this.accounts);
 	}
 	
-	public boolean getAuth() {
+	public ServerStatus getAuth() {
 		return this.convertStatusToGreen(this.auth);
 	}
 	
-	public boolean getSkins() {
+	public ServerStatus getSkins() {
 		return this.convertStatusToGreen(this.skins);
+	}
+	
+	public enum ServerStatus {
+		ONLINE, UNSTABLE, OFFLINE;
+		
 	}
 }

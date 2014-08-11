@@ -47,33 +47,57 @@ public class MainGUI extends JFrame implements ActionListener {
 		btnCreateANew.addActionListener(this);
 		panel.add(btnCreateANew);
 
-		if (cms.getMinecraft_net()) {
+		//switch (cms.getMinecraft_net()) {
+		switch (cms.getMinecraft_net()) {
+		case ONLINE:
 			lblminecraft_net = new JLabel("");
 			lblminecraft_net.setToolTipText("Minecraft.net is Online");
 			lblminecraft_net.setIcon(new ImageIcon("C:\\Users\\Ben\\Java\\Projects\\Launcher\\PodLauncher\\src\\io\\github\\podshot\\Podlauncher\\resources\\images\\redstone_lamp_on.png"));
 			lblminecraft_net.setBounds(30, 160, 32, 32);
 			panel.add(lblminecraft_net);
-		} else {
+			break;
+		case UNSTABLE:
+			lblminecraft_net = new JLabel("");
+			lblminecraft_net.setToolTipText("Minecraft.net is Unstable");
+			lblminecraft_net.setIcon(new ImageIcon("C:\\Users\\Ben\\Java\\Projects\\Launcher\\PodLauncher\\src\\io\\github\\podshot\\Podlauncher\\resources\\images\\redstone_lamp_unstable.png"));
+			lblminecraft_net.setBounds(30, 160, 32, 32);
+			panel.add(lblminecraft_net);
+			break;
+		case OFFLINE:
 			lblminecraft_net = new JLabel("");
 			lblminecraft_net.setToolTipText("Minecraft.net is Offline");
 			lblminecraft_net.setIcon(new ImageIcon("C:\\Users\\Ben\\Java\\Projects\\Launcher\\PodLauncher\\src\\io\\github\\podshot\\Podlauncher\\resources\\images\\redstone_lamp_off.png"));
 			lblminecraft_net.setBounds(30, 160, 32, 32);
 			panel.add(lblminecraft_net);
+			break;
+		default:
+			break;
 		}
 
-		if (cms.getSessions()) {
+		switch (CheckMojangServers.ServerStatus.UNSTABLE) {
+		case ONLINE:
 			lbllogin = new JLabel("");
 			lbllogin.setToolTipText("Minecraft Session Servers are Online");
 			lbllogin.setIcon(new ImageIcon("C:\\Users\\Ben\\Java\\Projects\\Launcher\\PodLauncher\\src\\io\\github\\podshot\\Podlauncher\\resources\\images\\redstone_lamp_on.png"));
 			lbllogin.setBounds(65, 160, 32, 32);
 			panel.add(lbllogin);
-		} else {
+			break;
+		case UNSTABLE:
+			lbllogin = new JLabel("");
+			lbllogin.setToolTipText("Minecraft Session Servers are Unstable");
+			lbllogin.setIcon(new ImageIcon("C:\\Users\\Ben\\Java\\Projects\\Launcher\\PodLauncher\\src\\io\\github\\podshot\\Podlauncher\\resources\\images\\redstone_lamp_unstable.png"));
+			lbllogin.setBounds(65, 160, 32, 32);
+			panel.add(lbllogin);
+			break;
+		default:
+			break;
+		}
+		
 			lbllogin = new JLabel("");
 			lbllogin.setToolTipText("Minecraft Session Servers are Offline");
 			lbllogin.setIcon(new ImageIcon("C:\\Users\\Ben\\Java\\Projects\\Launcher\\PodLauncher\\src\\io\\github\\podshot\\Podlauncher\\resources\\images\\redstone_lamp_off.png"));
 			lbllogin.setBounds(65, 160, 32, 32);
 			panel.add(lbllogin);
-		}
 	}
 
 

@@ -64,6 +64,7 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
+			System.out.println("Could not read config.json");
 			e.printStackTrace();
 		}
 		
@@ -80,7 +81,36 @@ public class LauncherConfig {
 		launcherJSON.put("Profiles", profileList);
 		
 		try {
-			FileWriter json = new FileWriter("PodLauncher" + File.separator + "config2.json");
+			FileWriter json = new FileWriter("PodLauncher" + File.separator + "config.json");
+			json.write(launcherJSON.toJSONString());
+			json.flush();
+			json.close();
+		} catch (IOException ioe) {
+			System.out.println("Could not save config.json");
+			ioe.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void editLauncherJSON(String keyValue, String value) {
+		
+		JSONParser parser = new JSONParser();
+		JSONObject launcherJSON = null;
+		
+		try {
+			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		
+		if (launcherJSON.containsKey(keyValue)) {
+			launcherJSON.remove(keyValue);
+		}
+		
+		launcherJSON.put(keyValue, value);
+		
+		try {
+			FileWriter json = new FileWriter("PodLauncher" + File.separator + "config.json");
 			json.write(launcherJSON.toJSONString());
 			json.flush();
 			json.close();
@@ -88,5 +118,4 @@ public class LauncherConfig {
 			ioe.printStackTrace();
 		}
 	}
-
 }
