@@ -5,7 +5,7 @@ import io.github.podshot.Podlauncher.gui.MainGUI;
 
 import java.io.File;
 
-public class MainLauncher {
+public class PodLauncher {
 
 	/**
 	 * @param args
@@ -21,5 +21,4 @@ public class MainLauncher {
 		mainGUI.setVisible(true);
 
 	}
-
 }
