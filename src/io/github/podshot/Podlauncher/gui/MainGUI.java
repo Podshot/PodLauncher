@@ -59,10 +59,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 		btnEditProfile = new JButton("Edit Profile");
 		btnEditProfile.setBounds(360, 29, 130, 23);
+		btnEditProfile.addActionListener(this);
 		panel.add(btnEditProfile);
 		
 		btnLaunchProfile = new JButton("Launch Profile");
 		btnLaunchProfile.setBounds(10, 70, 130, 23);
+		btnLaunchProfile.addActionListener(this);
 		panel.add(btnLaunchProfile);
 
 		switch (cms.getMinecraft_net()) {

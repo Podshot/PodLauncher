@@ -1,9 +1,12 @@
 package io.github.podshot.Podlauncher.files;
 
+import io.github.podshot.Podlauncher.extras.Music;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -116,6 +119,55 @@ public class LauncherConfig {
 			json.close();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+		}
+	}
+	
+	@Music(songArtist = "Monstercat", songName = "Monstercat 018 - Frontier (Horizon Album Mix)", songUrl = "http://youtu.be/of7vnz3YS-k")
+	public static String[] getProfiles() {
+		ArrayList<String> profileList = new ArrayList<String>();
+		JSONParser parser = new JSONParser();
+		
+		JSONObject json = null;
+		JSONArray profiles = null;
+		
+		try {
+			json = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		
+		String lastProfile = (String) json.get("Last Profile");
+		profileList.add(lastProfile);
+		
+		profiles = (JSONArray) json.get("Profiles");
+		
+		for (Object profileOBJ : profiles) {
+			JSONObject profile = (JSONObject) profileOBJ;
+			String profileName = (String) profile.get("Profile Name");
+			if (!(profileName.equals(lastProfile))) {
+				profileList.add(profileName);
+			}
+		}
+		
+		return profileList.toArray(new String[profileList.size()]);
+	}
+	
+	/**
+	 * 
+	 * @param profileName
+	 * @param key
+	 * @param value
+	 */
+	public static void editProfile(String profileName, String key, String value) {
+		JSONObject launcherJSON;
+		
+		JSONParser parser = new JSONParser();
+		
+		try {
+			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
