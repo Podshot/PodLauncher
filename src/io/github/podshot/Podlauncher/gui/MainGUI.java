@@ -1,6 +1,6 @@
 package io.github.podshot.Podlauncher.gui;
 
-import io.github.podshot.Podlauncher.LaunchMinecraft;
+//TODO import io.github.podshot.Podlauncher.LaunchMinecraft;
 import io.github.podshot.Podlauncher.extras.CheckMojangServers;
 import io.github.podshot.Podlauncher.files.LauncherConfig;
 
@@ -32,12 +32,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton btnLaunchProfile;
 
 	public MainGUI() {
-		CheckMojangServers cms = null;
-		try {
-			cms = new CheckMojangServers();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		this.setTitle("PodLauncher");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -67,7 +61,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		btnLaunchProfile.addActionListener(this);
 		panel.add(btnLaunchProfile);
 
-		switch (cms.getMinecraft_net()) {
+		switch (CheckMojangServers.getMinecraft_net()) {
 		case ONLINE:
 			lblminecraft_net = new JLabel("");
 			lblminecraft_net.setToolTipText("Minecraft.net is Online");
@@ -93,7 +87,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			break;
 		}
 
-		switch (cms.getSessions()) {
+		switch (CheckMojangServers.getSessions()) {
 		case ONLINE:
 			lbllogin = new JLabel("");
 			lbllogin.setToolTipText("Minecraft Session Servers are Online");
@@ -119,7 +113,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			break;
 		}
 
-		switch (cms.getAccounts()) {
+		switch (CheckMojangServers.getAccounts()) {
 		case ONLINE:
 			lblaccount = new JLabel("");
 			lblaccount.setToolTipText("Mojang Account Servers are Online");
@@ -145,7 +139,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			break;
 		}
 
-		switch (cms.getAuth()) {
+		switch (CheckMojangServers.getAuth()) {
 		case ONLINE:
 			lblauth = new JLabel("");
 			lblauth.setToolTipText("Minecraft Login Servers are Online");
@@ -171,7 +165,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			break;
 		}
 
-		switch (cms.getSkins()) {
+		switch (CheckMojangServers.getSkins()) {
 		case ONLINE:
 			lblskins = new JLabel("");
 			lblskins.setToolTipText("Minecraft Skins are Online");
@@ -211,7 +205,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 		
 		if (event.getSource() == this.btnLaunchProfile) {
-			new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
+			//TODO new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
 		}
 
 	}

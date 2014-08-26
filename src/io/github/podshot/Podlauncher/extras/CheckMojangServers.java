@@ -3,12 +3,16 @@ package io.github.podshot.Podlauncher.extras;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import sk.tomsik68.mclauncher.util.HttpUtils;
 
 @SuppressWarnings("unused")
 public class CheckMojangServers {
 	
+	private static JSONParser parser = new JSONParser();
+
 	private String minecraft_net;
 	private String sessions;
 	private String accounts;
@@ -19,6 +23,7 @@ public class CheckMojangServers {
 	private String api;
 	private String textures;
 
+	@Deprecated
 	public CheckMojangServers() throws Exception {
 		String status = HttpUtils.httpGet("http://status.mojang.com/check");
 		JSONArray array = (JSONArray) JSONValue.parse(status);
@@ -35,7 +40,7 @@ public class CheckMojangServers {
 		
 	}
 	
-	private ServerStatus convertStatusToGreen(String stat) {
+	private static ServerStatus convertStatusToGreen(String stat) {
 		if (stat.equals("green")) {
 			return ServerStatus.ONLINE;
 		}
@@ -45,29 +50,50 @@ public class CheckMojangServers {
 		}
 		return ServerStatus.OFFLINE;
 	}
+	
+	private static JSONArray getStatusJSON() {
+		JSONArray status = null;
+		try {
+			status = (JSONArray) parser.parse(HttpUtils.httpGet("http://status.mojang.com/check"));
+		} catch (Exception e) {
+			System.out.println("Could not parse Minecraft Server Status");
+			e.printStackTrace();
+		}
+		return status;
+		
+	}
 
-	public ServerStatus getMinecraft_net() {
-		return this.convertStatusToGreen(this.minecraft_net);
+	public static ServerStatus getMinecraft_net() {
+		JSONArray status = getStatusJSON();
+		String statusCode = (String) ((JSONObject) status.get(0)).get("minecraft.net");
+		return convertStatusToGreen(statusCode);
 	}
 	
-	public ServerStatus getSessions() {
-		return this.convertStatusToGreen(this.sessions);
+	public static ServerStatus getSessions() {
+		JSONArray status = getStatusJSON();
+		String statusCode = (String) ((JSONObject) status.get(1)).get("session.minecraft.net");
+		return CheckMojangServers.convertStatusToGreen(statusCode);
 	}
 	
-	public ServerStatus getAccounts() {
-		return this.convertStatusToGreen(this.accounts);
+	public static ServerStatus getAccounts() {
+		JSONArray status = getStatusJSON();
+		String statusCode = (String) ((JSONObject) status.get(2)).get("account.mojang.com");
+		return CheckMojangServers.convertStatusToGreen(statusCode);
 	}
 	
-	public ServerStatus getAuth() {
-		return this.convertStatusToGreen(this.auth);
+	public static ServerStatus getAuth() {
+		JSONArray status = getStatusJSON();
+		String statusCode = (String) ((JSONObject) status.get(3)).get("auth.mojang.com");
+		return CheckMojangServers.convertStatusToGreen(statusCode);
 	}
 	
-	public ServerStatus getSkins() {
-		return this.convertStatusToGreen(this.skins);
+	public static ServerStatus getSkins() {
+		JSONArray status = getStatusJSON();
+		String statusCode = (String) ((JSONObject) status.get(4)).get("skins.minecraft.net");
+		return CheckMojangServers.convertStatusToGreen(statusCode);
 	}
 	
 	public enum ServerStatus {
 		ONLINE, UNSTABLE, OFFLINE;
-		
 	}
 }
