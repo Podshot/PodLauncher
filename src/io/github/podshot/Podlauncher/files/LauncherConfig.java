@@ -15,8 +15,11 @@ import org.json.simple.parser.ParseException;
 
 public class LauncherConfig {
 
+	private static JSONParser parser;
+
 	@SuppressWarnings("unchecked")
 	public LauncherConfig() {
+		parser = new JSONParser();
 		File launcherConfig = new File("PodLauncher" + File.separator + "config.json");
 		if (!(launcherConfig.exists())) {
 			try {
@@ -61,7 +64,6 @@ public class LauncherConfig {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void addProfile(String name, String username, String password, String directory, String version)  {
-		JSONParser parser = new JSONParser();
 		JSONObject launcherJSON = null;
 		
 		try {
@@ -97,7 +99,6 @@ public class LauncherConfig {
 	@SuppressWarnings("unchecked")
 	public static void editLauncherJSON(String keyValue, String value) {
 		
-		JSONParser parser = new JSONParser();
 		JSONObject launcherJSON = null;
 		
 		try {
@@ -125,7 +126,6 @@ public class LauncherConfig {
 	@Music(songArtist = "Monstercat", songName = "Monstercat 018 - Frontier (Horizon Album Mix)", songUrl = "http://youtu.be/of7vnz3YS-k")
 	public static String[] getProfiles() {
 		ArrayList<String> profileList = new ArrayList<String>();
-		JSONParser parser = new JSONParser();
 		
 		JSONObject json = null;
 		JSONArray profiles = null;
@@ -158,10 +158,11 @@ public class LauncherConfig {
 	 * @param key
 	 * @param value
 	 */
-	public static void editProfile(String profileName, String key, String value) {
-		JSONObject launcherJSON;
-		
-		JSONParser parser = new JSONParser();
+	@Music(songArtist = "More Kords ft. Miyoki", songName = "Fragmentize", songUrl = "Currently Unknown")
+	@SuppressWarnings("unchecked")
+	public static JSONObject getProfile(String profileName) {
+		JSONObject launcherJSON = null;
+		JSONObject profile2return = null;
 		
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
@@ -169,5 +170,29 @@ public class LauncherConfig {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		JSONArray profiles = (JSONArray) launcherJSON.get("Profiles");
+		
+		for (Object profileOBJ : profiles) {
+			JSONObject profile = (JSONObject) profileOBJ;
+			String name = (String) profile.get("Profile Name");
+			if (name.equals(profileName)) {
+				profile2return = profile;
+			}
+		}
+		profiles.remove(profile2return);
+		
+		launcherJSON.put("Profiles", profiles);
+		
+		try {
+			FileWriter json = new FileWriter("PodLauncher" + File.separator + "config.json");
+			json.write(launcherJSON.toJSONString());
+			json.flush();
+			json.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		
+		return profile2return;
 	}
 }

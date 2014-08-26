@@ -202,6 +202,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 		if (event.getSource() == this.btnEditProfile) {
 			String profile2edit = (String) this.profileComboBox.getSelectedItem();
+			EditProfileGUI epgui = new EditProfileGUI(profile2edit);
+			epgui.setVisible(true);
 		}
 		
 		if (event.getSource() == this.btnLaunchProfile) {
