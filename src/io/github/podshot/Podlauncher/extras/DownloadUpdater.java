@@ -32,12 +32,23 @@ public class DownloadUpdater {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static void run() throws IOException {
 		Runtime runtime = Runtime.getRuntime();
 
-		Process proc = runtime.exec("java -jar \"PodLuancher" + File.separator + "update" + File.separator + "Updater.jar\"");
-		System.out.println("Can now exit");
+		Process proc = runtime.exec("java -jar \"PodLauncher" + File.separator + "update" + File.separator + "Updater.jar\"");
+		System.exit(0);
 
+	}
+
+	public static void cleanup() {
+		File updateF = new File("PodLauncher" + File.separator + "update");
+		if (updateF.exists()) {
+			for (File file : updateF.listFiles()) {
+				file.delete();
+			}
+			updateF.delete();
+		}
 	}
 
 }
