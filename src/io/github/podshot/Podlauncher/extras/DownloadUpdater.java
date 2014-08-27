@@ -22,6 +22,7 @@ public class DownloadUpdater {
 			ReadableByteChannel rbc = Channels.newChannel(downloadURL.openStream());
 			FileOutputStream fos = new FileOutputStream("PodLauncher" + File.separator + "update" + File.separator + "Updater.jar");
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			fos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

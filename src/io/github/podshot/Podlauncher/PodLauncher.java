@@ -6,7 +6,6 @@ import io.github.podshot.Podlauncher.gui.MainGUI;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 public class PodLauncher {
 
@@ -20,7 +19,6 @@ public class PodLauncher {
 				DownloadUpdater.cleanup();
 			}
 		}
-		DownloadUpdater.start(new URL("https://dl.dropbox.com/s/ephf07kxtohp6yw/Test-Updater.jar"));
 		File launcherFolder = new File("PodLauncher");
 		if (!(launcherFolder.exists())) {
 			launcherFolder.mkdir();
