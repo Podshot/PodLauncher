@@ -21,4 +21,20 @@ public class PodLauncher {
 		mainGUI.setVisible(true);
 
 	}
+	
+	public static String getVersion() {
+		return "0.0.1";
+	}
+	
+	public static String getDevelopmentStage() {
+		return "alpha";
+	}
+	
+	public static boolean inDebugMode() {
+		return true;
+	}
+	
+	public static boolean isDevMode() {
+		return true;
+	}
 }
