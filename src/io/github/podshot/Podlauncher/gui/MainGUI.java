@@ -1,9 +1,11 @@
 package io.github.podshot.Podlauncher.gui;
 
-//TODO import io.github.podshot.Podlauncher.LaunchMinecraft;
+import io.github.podshot.Podlauncher.LaunchMinecraft;
+import io.github.podshot.Podlauncher.PodLauncher;
 import io.github.podshot.Podlauncher.extras.CheckMojangServers;
 import io.github.podshot.Podlauncher.files.LauncherConfig;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,6 +37,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		this.setTitle("PodLauncher");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
+		this.setSize(614, 420);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 614, 420);
@@ -43,16 +46,16 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		profileComboBox = new JComboBox<String>();
 		profileComboBox.setModel(new DefaultComboBoxModel<String>(LauncherConfig.getProfiles()));
-		profileComboBox.setBounds(10, 30, 130, 20);
+		profileComboBox.setBounds(10, 30, 230, 20);
 		panel.add(profileComboBox);
 
 		btnCreateANew = new JButton("Create a new Profile");
-		btnCreateANew.setBounds(173, 29, 160, 23);
+		btnCreateANew.setBounds(260, 29, 160, 23);
 		btnCreateANew.addActionListener(this);
 		panel.add(btnCreateANew);
 		
 		btnEditProfile = new JButton("Edit Profile");
-		btnEditProfile.setBounds(360, 29, 130, 23);
+		btnEditProfile.setBounds(430, 29, 130, 23);
 		btnEditProfile.addActionListener(this);
 		panel.add(btnEditProfile);
 		
@@ -60,6 +63,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		btnLaunchProfile.setBounds(10, 70, 130, 23);
 		btnLaunchProfile.addActionListener(this);
 		panel.add(btnLaunchProfile);
+		
+		JLabel lblPodlauncherVersion = new JLabel("PodLauncher Version: " + PodLauncher.getDevelopmentStage() + "-" + PodLauncher.getVersion());
+		lblPodlauncherVersion.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPodlauncherVersion.setBounds(10, 350, 230, 14);
+		panel.add(lblPodlauncherVersion);
 
 		switch (CheckMojangServers.getMinecraft_net()) {
 		case ONLINE:
@@ -207,7 +215,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 		
 		if (event.getSource() == this.btnLaunchProfile) {
-			//TODO new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
+			new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
 		}
 
 	}

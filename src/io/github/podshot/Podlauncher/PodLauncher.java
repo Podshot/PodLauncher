@@ -14,8 +14,8 @@ public class PodLauncher {
 	 * @throws MalformedURLException 
 	 */
 	public static void main(String[] args) throws MalformedURLException {
-		if (args.length == 1) {
-			if (args[0].equalsIgnoreCase("-updated")) {
+		for (String argument : args) {
+			if (argument.equalsIgnoreCase("-updated")) {
 				DownloadUpdater.cleanup();
 			}
 		}
