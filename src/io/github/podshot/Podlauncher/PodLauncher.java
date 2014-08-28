@@ -23,7 +23,7 @@ public class PodLauncher {
 		if (!(launcherFolder.exists())) {
 			launcherFolder.mkdir();
 		}
-		new LauncherConfig();
+		LauncherConfig.checkForFile();
 
 		MainGUI mainGUI = new MainGUI();
 		mainGUI.setVisible(true);
@@ -31,7 +31,7 @@ public class PodLauncher {
 	}
 
 	public static String getVersion() {
-		return "0.0.1";
+		return "0.0.3";
 	}
 
 	public static String getDevelopmentStage() {

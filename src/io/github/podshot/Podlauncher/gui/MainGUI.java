@@ -17,9 +17,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MainGUI extends JFrame implements ActionListener {
+import sk.tomsik68.mclauncher.api.ui.IProgressMonitor;
+import javax.swing.JProgressBar;
+
+public class MainGUI extends JFrame implements ActionListener, IProgressMonitor {
 
 	private static final long serialVersionUID = 1L;
+	private static MainGUI instance;
 	private JComboBox<String> profileComboBox;
 	private JButton btnCreateANew;
 	private JLabel lblminecraft_net;
@@ -32,14 +36,17 @@ public class MainGUI extends JFrame implements ActionListener {
 	private ImageIcon OFFLINE = new ImageIcon(this.getClass().getResource("/images/redstone_lamp_off.png"));
 	private JButton btnEditProfile;
 	private JButton btnLaunchProfile;
+	private JProgressBar progressBar;
+	private JPanel panel;
 
 	public MainGUI() {
+		instance = this;
 		this.setTitle("PodLauncher");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 		this.setSize(614, 420);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(0, 0, 614, 420);
 		getContentPane().add(panel);
 		panel.setLayout(null);
@@ -68,6 +75,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		lblPodlauncherVersion.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPodlauncherVersion.setBounds(10, 350, 230, 14);
 		panel.add(lblPodlauncherVersion);
+		
+		progressBar = new JProgressBar();
+		progressBar.setStringPainted(true);
+		progressBar.setBounds(178, 95, 380, 20);
+		progressBar.setVisible(false);
+		panel.add(progressBar);
 
 		switch (CheckMojangServers.getMinecraft_net()) {
 		case ONLINE:
@@ -215,8 +228,39 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 		
 		if (event.getSource() == this.btnLaunchProfile) {
+			progressBar.setVisible(true);
 			new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
+			this.btnLaunchProfile.setEnabled(false);
 		}
 
+	}
+
+
+	public static MainGUI getInstance() {
+		return instance;
+	}
+
+
+	@Override
+	public void finish() {
+		this.progressBar.setValue(this.progressBar.getMaximum());
+	}
+
+
+	@Override
+	public void incrementProgress(int arg0) {
+		this.progressBar.setValue(arg0);
+	}
+
+
+	@Override
+	public void setMax(int arg0) {
+		this.progressBar.setMaximum(arg0);		
+	}
+
+
+	@Override
+	public void setProgress(int arg0) {
+		this.progressBar.setValue(arg0);
 	}
 }

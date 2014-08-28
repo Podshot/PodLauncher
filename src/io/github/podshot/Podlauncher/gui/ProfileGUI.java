@@ -89,7 +89,7 @@ public class ProfileGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == this.btnCreateProfile) {
-			LauncherConfig.addProfile(this.textFieldProfileName.getText(), this.textFieldUsername.getText(), this.passwordFieldPassword.getPassword().toString(), this.textFieldGameDir.getText(), GetMinecraftVersions.stripVersionPrefix(this.comboBox.getSelectedItem().toString()));
+			LauncherConfig.addProfile(this.textFieldProfileName.getText(), this.textFieldUsername.getText(), new String(this.passwordFieldPassword.getPassword()), this.textFieldGameDir.getText(), GetMinecraftVersions.stripVersionPrefix(this.comboBox.getSelectedItem().toString()));
 			this.dispose();
 		}
 

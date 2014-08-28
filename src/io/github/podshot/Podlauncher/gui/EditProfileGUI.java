@@ -38,7 +38,7 @@ public class EditProfileGUI extends JFrame implements ActionListener {
 				saveProfile();
 			}
 		};
-		JSONObject profile = LauncherConfig.getProfile(profile_to_edit);
+		JSONObject profile = LauncherConfig.getProfile(profile_to_edit, true);
 		this.setTitle("Edit Profile");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -116,7 +116,7 @@ public class EditProfileGUI extends JFrame implements ActionListener {
 	private void saveProfile() {
 		String profileName = this.textFieldProfileName.getText();
 		String profileUsername = this.textFieldUsername.getText();
-		String profilePassword = this.passwordFieldPassword.getPassword().toString();
+		String profilePassword = new String(this.passwordFieldPassword.getPassword());
 		String profileVersion = GetMinecraftVersions.stripVersionPrefix(this.comboBox.getSelectedItem().toString());
 		String profileDir = this.textFieldGameDir.getText();
 		LauncherConfig.addProfile(profileName, profileUsername, profilePassword, profileDir, profileVersion);
