@@ -7,13 +7,21 @@ import io.github.podshot.Podlauncher.gui.MainGUI;
 import java.io.File;
 import java.net.MalformedURLException;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 public class PodLauncher {
 
 	/**
 	 * @param args
 	 * @throws MalformedURLException 
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) throws MalformedURLException {
+	public static void main(String[] args) throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		for (String argument : args) {
 			if (argument.equalsIgnoreCase("-updated")) {
 				DownloadUpdater.cleanup();
