@@ -43,7 +43,6 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		this.password = (String) profileJSON.get("Password");
 		this.gameDir = new File((String) profileJSON.get("Game Directory"));
 		this.versionToLaunch = (String) profileJSON.get("Minecraft Version");
-		System.out.println("Username: " + this.username);
 		try {
 			this.launch();
 		} catch (Exception e) {
@@ -68,7 +67,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		ISession session = this.login(mc);
 		iversionToLaunch.getInstaller().install(iversionToLaunch, mc, MainGUI.getInstance());
 		Process proc = iversionToLaunch.getLauncher().launch(session, mc, null, iversionToLaunch, new DefaultLaunchSettings());
-
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream())); 
 		while (isProcessAlive(proc)) { 
 			String line = br.readLine(); 

@@ -27,6 +27,11 @@ public class PodLauncher {
 				DownloadUpdater.cleanup();
 			}
 		}
+		try {
+			new UpdateChecker();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		File launcherFolder = new File("PodLauncher");
 		if (!(launcherFolder.exists())) {
 			launcherFolder.mkdir();
@@ -39,7 +44,7 @@ public class PodLauncher {
 	}
 
 	public static String getVersion() {
-		return "0.0.3";
+		return "0.0.5";
 	}
 
 	public static String getDevelopmentStage() {

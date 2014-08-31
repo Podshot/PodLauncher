@@ -10,7 +10,7 @@ import org.json.simple.parser.JSONParser;
 import sk.tomsik68.mclauncher.util.HttpUtils;
 
 public class GetMinecraftVersions {
-	
+
 	private static ArrayList<String> allVersions = new ArrayList<String>();
 
 	public static String[] getStrings() {
@@ -25,22 +25,22 @@ public class GetMinecraftVersions {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		JSONArray versions = (JSONArray) versionsJSON.get("versions");
-		
+
 		@SuppressWarnings("unchecked")
 		Iterator<JSONObject> iter = versions.iterator();
 		while (iter.hasNext()) {
 			JSONObject version = iter.next();
-			
+
 			String sVersion = (String) version.get("type");
 			sVersion = sVersion + " " + (String) version.get("id");
-			
+
 			allVersions.add(sVersion);
-			
-			
+
+
 		}
-		
+
 	}
 
 	public static String stripVersionPrefix(String string) {
@@ -48,19 +48,21 @@ public class GetMinecraftVersions {
 		if (string.contains("snapshot")) {
 			newSTR = string.replace("snapshot ", "");
 		}
-		
+
 		if (string.contains("release")) {
 			newSTR = string.replace("release ", "");
 		}
-		
+
 		if (string.contains("old_beta")) {
 			newSTR = string.replace("old_beta ", "");
 		}
-		
+
 		if (string.contains("old_alpha")) {
 			newSTR = string.replace("old_alpha ", "");
 		}
-		System.out.println("Version Without Prefix: " + newSTR);
+		if (PodLauncher.inDebugMode()) {
+			System.out.println("Version Without Prefix: " + newSTR);
+		}
 		return newSTR;
 	}
 

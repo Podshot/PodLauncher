@@ -1,5 +1,7 @@
 package io.github.podshot.Podlauncher.extras;
 
+import io.github.podshot.Podlauncher.UpdateChecker;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,7 +11,8 @@ import java.nio.channels.ReadableByteChannel;
 
 public class DownloadUpdater {
 
-	public static void start(URL downloadURL) {
+	public static void start() {
+		URL downloadURL = UpdateChecker.getUpdateURL();
 		File updateF = new File("PodLauncher" + File.separator + "update");
 		if (!(updateF.exists())) {
 			updateF.mkdirs();

@@ -11,8 +11,9 @@ import sk.tomsik68.mclauncher.util.HttpUtils;
 
 public class UpdateChecker {
 	
-	private String versionInfoURL;
+	private String versionInfoURL = "http://podshot.github.io/PodLauncher/update/update.json";
 	private String currentVersion = PodLauncher.getVersion();
+	private static URL updaterURL;
 	
 	public UpdateChecker() throws Exception {
 		
@@ -22,13 +23,22 @@ public class UpdateChecker {
 		
 		String updateVersion = (String) versionInfo.get("Version");
 		String updateStage = (String) versionInfo.get("Development Stage");
-		URL updaterURL = new URL((String) versionInfo.get("Updater URL"));
+		updaterURL = new URL((String) versionInfo.get("Updater URL"));
 		
 		if (!(currentVersion.equals(updateVersion))) {
-			if (updateStage.equals("STABLE") && PodLauncher.isDevMode()) {
-				UpdateGUI upGUI = new UpdateGUI(updateVersion);
+			if (updateStage.equalsIgnoreCase("stable")) {
+				UpdateGUI upGUI = new UpdateGUI(updateVersion, false);
+				upGUI.setVisible(true);
+			}
+			if (updateStage.equalsIgnoreCase("CANIDATE")) {
+				UpdateGUI upGUI = new UpdateGUI(updateVersion, true);
+				upGUI.setVisible(true);
 			}
 		}
+	}
+
+	public static URL getUpdateURL() {
+		return updaterURL;
 	}
 
 }
