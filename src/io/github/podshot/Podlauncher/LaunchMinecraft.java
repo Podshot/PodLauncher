@@ -29,6 +29,8 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 	private File gameDir;
 	private String password;
 	private DownloadVersionList dwl;
+	private String RAMinitHeap;
+	private String RAMmaxHeap;
 
 	public LaunchMinecraft(String profile) {
 		dwl = new DownloadVersionList();
@@ -43,6 +45,16 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		this.password = (String) profileJSON.get("Password");
 		this.gameDir = new File((String) profileJSON.get("Game Directory"));
 		this.versionToLaunch = (String) profileJSON.get("Minecraft Version");
+		this.RAMinitHeap = (String) profileJSON.get("Init RAM Heap");
+		this.RAMmaxHeap = (String) profileJSON.get("Max RAM Heap");
+		
+		if (this.RAMinitHeap == null) {
+			this.RAMinitHeap = "256M";
+		}
+		if (this.RAMmaxHeap == null) {
+			this.RAMmaxHeap = "1G";
+			LauncherConfig.fixMaxHeap(profile, "1G");
+		}
 		try {
 			this.launch();
 		} catch (Exception e) {
