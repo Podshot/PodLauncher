@@ -1,6 +1,5 @@
 package io.github.podshot.Podlauncher;
 
-import io.github.podshot.Podlauncher.extras.DefaultLaunchSettings;
 import io.github.podshot.Podlauncher.extras.DownloadVersionList;
 import io.github.podshot.Podlauncher.files.LauncherConfig;
 import io.github.podshot.Podlauncher.gui.MainGUI;
@@ -8,9 +7,12 @@ import io.github.podshot.Podlauncher.gui.MainGUI;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 
+import sk.tomsik68.mclauncher.api.common.ILaunchSettings;
 import sk.tomsik68.mclauncher.api.common.IObservable;
 import sk.tomsik68.mclauncher.api.common.IObserver;
 import sk.tomsik68.mclauncher.api.common.mc.IMinecraftInstance;
@@ -78,7 +80,49 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 
 		ISession session = this.login(mc);
 		iversionToLaunch.getInstaller().install(iversionToLaunch, mc, MainGUI.getInstance());
-		Process proc = iversionToLaunch.getLauncher().launch(session, mc, null, iversionToLaunch, new DefaultLaunchSettings());
+		Process proc = iversionToLaunch.getLauncher().launch(session, mc, null, iversionToLaunch, new ILaunchSettings() {
+
+			@Override
+			public List<String> getCommandPrefix() {
+				return null;
+			}
+
+			@Override
+			public Map<String, String> getCustomParameters() {
+				return null;
+			}
+
+			@Override
+			public String getHeap() {
+				return RAMmaxHeap;
+			}
+
+			@Override
+			public String getInitHeap() {
+				return RAMinitHeap;
+			}
+
+			@Override
+			public List<String> getJavaArguments() {
+				return null;
+			}
+
+			@Override
+			public File getJavaLocation() {
+				return null;
+			}
+
+			@Override
+			public boolean isErrorStreamRedirected() {
+				return true;
+			}
+
+			@Override
+			public boolean isModifyAppletOptions() {
+				return false;
+			}
+			
+		});
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream())); 
 		while (isProcessAlive(proc)) { 

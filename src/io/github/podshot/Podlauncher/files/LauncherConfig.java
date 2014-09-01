@@ -13,12 +13,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+@SuppressWarnings("unchecked")
 public class LauncherConfig {
 
 	private static JSONParser parser = new JSONParser();
 	private static boolean fileCreated;
 
-	@SuppressWarnings("unchecked")
 	public static void checkForFile() {
 		File launcherConfig = new File("PodLauncher" + File.separator + "config.json");
 		if (!(launcherConfig.exists())) {
@@ -32,6 +32,7 @@ public class LauncherConfig {
 			JSONArray profileArray = new JSONArray();
 			mainJSON.put("Last Profile", "");
 			mainJSON.put("Profiles", profileArray);
+			mainJSON.put("Use Canidate Builds", "false");
 
 			try {
 				writeToFile(mainJSON.toJSONString());
@@ -59,7 +60,6 @@ public class LauncherConfig {
 	 * @param directory
 	 * @param version
 	 */
-	@SuppressWarnings("unchecked")
 	public static void addProfile(String name, String username, String password, String directory, String version) {
 		if (!(fileCreated)) {
 			checkForFile();
@@ -85,6 +85,31 @@ public class LauncherConfig {
 		profileList.add(newProfile);
 		launcherJSON.put("Profiles", profileList);
 
+		try {
+			writeToFile(launcherJSON.toJSONString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void addProfileFromJSON(JSONObject json) {
+		JSONObject launcherJSON = null;
+
+		try {
+			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+
+		JSONArray profileArray = (JSONArray) launcherJSON.get("Profiles");
+		if (profileArray.contains(json)) {
+			profileArray.remove(json);
+		}
+
+		profileArray.add(json);
+
+		launcherJSON.remove("Profiles");
+		launcherJSON.put("Profiles", profileArray);
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
@@ -133,7 +158,6 @@ public class LauncherConfig {
 	 * @return
 	 */
 	@Music(songArtist = "More Kords ft. Miyoki", songName = "Fragmentize", songUrl = "Currently Unknown")
-	@SuppressWarnings("unchecked")
 	public static JSONObject getProfile(String profileName, boolean remove) {
 		if (!(fileCreated)) {
 			checkForFile();
@@ -171,12 +195,11 @@ public class LauncherConfig {
 
 		return profile2return;
 	}
-	
+
 	/**
 	 * 
 	 * @param profile
 	 */
-	@SuppressWarnings("unchecked")
 	public static void updateLastProfile(String profile) {
 		JSONObject launcherJSON = null;
 		try {
@@ -185,15 +208,39 @@ public class LauncherConfig {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		launcherJSON.remove("Last Profile");
 		launcherJSON.put("Last Profile", profile);
-		
+
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	public static void fixMaxHeap(String profile, String string) {
+		JSONObject profileJSON = getProfile(profile, false);
+
+	}
+
+	public static void addJSONEntry(String profile, String key, String value) {
+		JSONObject profileJSON = getProfile(profile, true);
+		profileJSON.put(key, value);
+		addProfileFromJSON(profileJSON);
+
+	}
+
+	public static boolean shouldUseCanidateBuilds() {
+		JSONObject launcherJSON = null;
+		try {
+			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+
+		boolean shouldUseCanidate = new Boolean((String) launcherJSON.get("Use Canidate Builds"));
+		return shouldUseCanidate;
 	}
 }

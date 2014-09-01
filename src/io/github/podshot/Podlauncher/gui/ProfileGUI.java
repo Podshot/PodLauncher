@@ -1,6 +1,7 @@
 package io.github.podshot.Podlauncher.gui;
 
 import io.github.podshot.Podlauncher.GetMinecraftVersions;
+import io.github.podshot.Podlauncher.files.LauncherConfig;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -286,6 +287,7 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 				}
 				break;
 			}
+			LauncherConfig.addProfileFromJSON(profile);
 			this.dispose();
 		}
 		if (initRamBtnGrp.getSelection().getActionCommand().equals("Custom")) {
