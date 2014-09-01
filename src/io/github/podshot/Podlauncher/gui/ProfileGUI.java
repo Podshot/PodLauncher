@@ -117,7 +117,7 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 
 		initRamBtnGrp = new ButtonGroup();
 		maxRamBtnGrp = new ButtonGroup();
-		
+
 
 		rdbtnInit256Megabytes = new JRadioButton("256 Megabytes");
 		rdbtnInit256Megabytes.setBounds(324, 31, 109, 23);
@@ -163,7 +163,7 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 		initCustomRam.setBounds(400, 162, 50, 20);
 		getContentPane().add(initCustomRam);
 		initCustomRam.setColumns(10);
-		
+
 		maxCustomRam = new JTextField();
 		maxCustomRam.setText("3G");
 		maxCustomRam.setColumns(10);
@@ -180,46 +180,46 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 		txtrMustBeA.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtrMustBeA.setLineWrap(true);
 		txtrMustBeA.setText("Must be a valid number and must end with either a \"M\" or a \"G\"");
-		txtrMustBeA.setBounds(291, 216, 183, 34);
+		txtrMustBeA.setBounds(324, 216, 183, 34);
 		getContentPane().add(txtrMustBeA);
-		
+
 		rdbtnMax256Megabytes = new JRadioButton("256 Megabytes");
 		rdbtnMax256Megabytes.setBounds(490, 31, 109, 23);
 		rdbtnMax256Megabytes.setActionCommand("256M");
 		maxRamBtnGrp.add(rdbtnMax256Megabytes);
 		getContentPane().add(rdbtnMax256Megabytes);
-		
+
 		rdbtnMax512Megabytes = new JRadioButton("512 Megabytes");
 		rdbtnMax512Megabytes.setBounds(490, 57, 109, 23);
 		rdbtnMax512Megabytes.setActionCommand("512M");
 		maxRamBtnGrp.add(rdbtnMax512Megabytes);
 		getContentPane().add(rdbtnMax512Megabytes);
-		
+
 		rdbtnMax1Gigabyte = new JRadioButton("1 Gigabyte");
 		rdbtnMax1Gigabyte.setBounds(490, 86, 109, 23);
 		rdbtnMax1Gigabyte.setActionCommand("1G");
 		rdbtnMax1Gigabyte.setSelected(true);
 		maxRamBtnGrp.add(rdbtnMax1Gigabyte);
 		getContentPane().add(rdbtnMax1Gigabyte);
-		
+
 		rdbtnMax1_5Gigabytes = new JRadioButton("1.5 Gigabytes");
 		rdbtnMax1_5Gigabytes.setBounds(490, 112, 109, 23);
 		rdbtnMax1_5Gigabytes.setActionCommand("1536M");
 		maxRamBtnGrp.add(rdbtnMax1_5Gigabytes);
 		getContentPane().add(rdbtnMax1_5Gigabytes);
-		
+
 		rdbtnMax2Gigabytes = new JRadioButton("2 Gigabytes");
 		rdbtnMax2Gigabytes.setBounds(490, 138, 109, 23);
 		rdbtnMax2Gigabytes.setActionCommand("2G");
 		maxRamBtnGrp.add(rdbtnMax2Gigabytes);
 		getContentPane().add(rdbtnMax2Gigabytes);
-		
+
 		rdbtnMaxCustom = new JRadioButton("Custom");
 		rdbtnMaxCustom.setBounds(490, 166, 70, 23);
 		rdbtnMaxCustom.setActionCommand("Custom");
 		maxRamBtnGrp.add(rdbtnMaxCustom);
 		getContentPane().add(rdbtnMaxCustom);
-		
+
 		JLabel lblRamMaxHeap = new JLabel("RAM Max Heap Options");
 		lblRamMaxHeap.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRamMaxHeap.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -247,6 +247,44 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 			case "512M":
 				profile.put("Init RAM Heap", "512M");
 				break;
+			case "1G":
+				profile.put("Init RAM Heap", "1G");
+				break;
+			case "1536M":
+				profile.put("Init RAM Heap", "1536M");
+				break;
+			case "2G":
+				profile.put("Init RAM Heap", "2G");
+				break;
+			case "Custom":
+				if (this.initCustomRam.getText().endsWith("G") || this.initCustomRam.getText().endsWith("M")) {
+					profile.put("Init RAM Heap", this.initCustomRam.getText());
+				}
+				break;
+			}
+			switch (maxRamBtnGrp.getSelection().getActionCommand()) {
+			default:
+				break;
+			case "256M":
+				profile.put("Max RAM Heap", "256M");
+				break;
+			case "512M":
+				profile.put("Max RAM Heap", "512M");
+				break;
+			case "1G":
+				profile.put("Max RAM Heap", "1G");
+				break;
+			case "1536M":
+				profile.put("Max RAM Heap", "1536M");
+				break;
+			case "2G":
+				profile.put("Max RAM Heap", "2G");
+				break;
+			case "Custom":
+				if (this.maxCustomRam.getText().endsWith("G") || this.maxCustomRam.getText().endsWith("M")) {
+					profile.put("Max RAM Heap", this.initCustomRam.getText());
+				}
+				break;
 			}
 			this.dispose();
 		}
@@ -265,6 +303,6 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 		if (itemEVT.getStateChange() == ItemEvent.DESELECTED) {
 			System.out.println("Item Deselected");
 		}
-		
+
 	}
 }
