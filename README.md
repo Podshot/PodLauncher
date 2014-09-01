@@ -15,9 +15,9 @@ Installing from Source
 
 TODO
 ==================
-- â˜‘ Create Basic GUI (Doesn't need to be fancy, yet)
-- â˜‘ Login(
-- â˜‘ Launching the Game
-- â˜‘ Launch versions 1.6 and higher
-- â˜� Use profiles and have ability to use multiple accounts(Needs fine tuning)
-- â˜‘ Check Mojang Server Statuses at startup 
+- ☑ Create Basic GUI (Doesn't need to be fancy, yet)
+- ☑ Login(
+- ☑ Launching the Game
+- ☑ Launch versions 1.6 and higher
+- ☐ Use profiles and have ability to use multiple accounts(Needs fine tuning)
+- ☑ Check Mojang Server Statuses at startup 
