@@ -8,6 +8,8 @@ import io.github.podshot.Podlauncher.files.LauncherConfig;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -19,8 +21,10 @@ import javax.swing.JPanel;
 
 import sk.tomsik68.mclauncher.api.ui.IProgressMonitor;
 import javax.swing.JProgressBar;
+import javax.swing.JCheckBox;
+import javax.swing.SwingConstants;
 
-public class MainGUI extends JFrame implements ActionListener, IProgressMonitor {
+public class MainGUI extends JFrame implements ActionListener, IProgressMonitor, ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	private static MainGUI instance;
@@ -38,6 +42,8 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor 
 	private JButton btnLaunchProfile;
 	private JProgressBar progressBar;
 	private JPanel panel;
+	private int timesLaunched = 0;
+	private JCheckBox chckbxUseCanidateBuilds;
 
 	public MainGUI() {
 		instance = this;
@@ -60,27 +66,33 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor 
 		btnCreateANew.setBounds(260, 29, 160, 23);
 		btnCreateANew.addActionListener(this);
 		panel.add(btnCreateANew);
-		
+
 		btnEditProfile = new JButton("Edit Profile");
 		btnEditProfile.setBounds(430, 29, 130, 23);
 		btnEditProfile.addActionListener(this);
 		panel.add(btnEditProfile);
-		
+
 		btnLaunchProfile = new JButton("Launch Profile");
 		btnLaunchProfile.setBounds(10, 70, 130, 23);
 		btnLaunchProfile.addActionListener(this);
 		panel.add(btnLaunchProfile);
-		
+
 		JLabel lblPodlauncherVersion = new JLabel("PodLauncher Version: " + PodLauncher.getDevelopmentStage() + "-" + PodLauncher.getVersion());
 		lblPodlauncherVersion.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPodlauncherVersion.setBounds(10, 350, 230, 14);
 		panel.add(lblPodlauncherVersion);
-		
+
 		progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
 		progressBar.setBounds(178, 95, 380, 20);
 		progressBar.setVisible(false);
 		panel.add(progressBar);
+		
+		chckbxUseCanidateBuilds = new JCheckBox("Use Canidate Builds? (May contain bugs!)");
+		chckbxUseCanidateBuilds.setHorizontalAlignment(SwingConstants.CENTER);
+		chckbxUseCanidateBuilds.addItemListener(this);
+		chckbxUseCanidateBuilds.setBounds(260, 346, 230, 23);
+		panel.add(chckbxUseCanidateBuilds);
 
 		switch (CheckMojangServers.getMinecraft_net()) {
 		case ONLINE:
@@ -217,20 +229,26 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == this.btnCreateANew) {
-			ProfileGUI profGUI = new ProfileGUI();
+			CreateProfileGUI profGUI = new CreateProfileGUI();
 			profGUI.setVisible(true);
 		}
-		
+
 		if (event.getSource() == this.btnEditProfile) {
 			String profile2edit = (String) this.profileComboBox.getSelectedItem();
 			EditProfileGUI epgui = new EditProfileGUI(profile2edit);
 			epgui.setVisible(true);
 		}
-		
+
 		if (event.getSource() == this.btnLaunchProfile) {
+			if (PodLauncher.inDebugMode()) {
+				this.timesLaunched = this.timesLaunched  + 1;
+				System.out.println("Time the Launched button has fired: " + this.timesLaunched);
+			}
+			this.btnLaunchProfile.removeActionListener(this);
 			progressBar.setVisible(true);
-			new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
 			this.btnLaunchProfile.setEnabled(false);
+			this.panel.repaint();
+			new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
 		}
 
 	}
@@ -262,5 +280,18 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor 
 	@Override
 	public void setProgress(int arg0) {
 		this.progressBar.setValue(arg0);
+	}
+	
+	public void refreshProfileList() {
+		this.profileComboBox.setModel(new DefaultComboBoxModel<String>(LauncherConfig.getProfiles()));
+		this.panel.repaint();
+	}
+
+
+	@Override
+	public void itemStateChanged(ItemEvent evt) {
+		if (evt.getItem() == this.chckbxUseCanidateBuilds) {
+			LauncherConfig.setUseCanidateBuilds(this.chckbxUseCanidateBuilds.isSelected());
+		}
 	}
 }

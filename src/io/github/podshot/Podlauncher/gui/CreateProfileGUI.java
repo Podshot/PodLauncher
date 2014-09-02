@@ -24,8 +24,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import org.json.simple.JSONObject;
+import java.awt.Color;
+import javax.swing.UIManager;
 
-public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
+public class CreateProfileGUI extends JFrame implements ActionListener, ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldProfileName;
@@ -51,7 +53,8 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 	private JRadioButton rdbtnMax2Gigabytes;
 	private JRadioButton rdbtnMaxCustom;
 
-	public ProfileGUI() {
+	public CreateProfileGUI() {
+		getContentPane().setBackground(new Color(240, 240, 240));
 		this.setTitle("Create a new Profile");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -179,6 +182,7 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 		getContentPane().add(lblCustomRamFormat);
 
 		JTextArea txtrMustBeA = new JTextArea();
+		txtrMustBeA.setBackground(UIManager.getColor("Button.background"));
 		txtrMustBeA.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtrMustBeA.setLineWrap(true);
 		txtrMustBeA.setText("Must be a valid number and must end with either a \"M\" or a \"G\"");
@@ -302,6 +306,7 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 				break;
 			}
 			LauncherConfig.addProfileFromJSON(profile);
+			MainGUI.getInstance().refreshProfileList();
 			this.dispose();
 		}
 		if (initRamBtnGrp.getSelection().getActionCommand().equals("Custom")) {
