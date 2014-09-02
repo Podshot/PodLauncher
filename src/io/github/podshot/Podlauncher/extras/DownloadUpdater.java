@@ -40,7 +40,11 @@ public class DownloadUpdater {
 	private static void run() throws IOException {
 		Runtime runtime = Runtime.getRuntime();
 
-		Process proc = runtime.exec("java -jar \"PodLauncher" + File.separator + "update" + File.separator + "Updater.jar\"");
+		if (UpdateChecker.isACanidateUpdate()) {
+			Process proc = runtime.exec("java -jar \"PodLauncher" + File.separator + "update" + File.separator + "Updater.jar\" -canidate");
+		} else {
+			Process proc = runtime.exec("java -jar \"PodLauncher" + File.separator + "update" + File.separator + "Updater.jar\"");
+		}
 		System.exit(0);
 
 	}

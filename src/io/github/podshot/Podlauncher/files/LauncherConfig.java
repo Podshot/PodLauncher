@@ -60,6 +60,7 @@ public class LauncherConfig {
 	 * @param directory
 	 * @param version
 	 */
+	@Deprecated
 	public static void addProfile(String name, String username, String password, String directory, String version) {
 		if (!(fileCreated)) {
 			checkForFile();
@@ -220,11 +221,6 @@ public class LauncherConfig {
 
 	}
 
-	public static void fixMaxHeap(String profile, String string) {
-		JSONObject profileJSON = getProfile(profile, false);
-
-	}
-
 	public static void addJSONEntry(String profile, String key, String value) {
 		JSONObject profileJSON = getProfile(profile, true);
 		profileJSON.put(key, value);
@@ -242,5 +238,24 @@ public class LauncherConfig {
 
 		boolean shouldUseCanidate = new Boolean((String) launcherJSON.get("Use Canidate Builds"));
 		return shouldUseCanidate;
+	}
+	
+	public static void setUseCanidateBuilds(boolean bool) {
+		JSONObject launcherJSON = null;
+		try {
+			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		
+		if (launcherJSON.containsKey("Use Canidate Builds")) {
+			launcherJSON.remove("Use Canidate Builds");
+		}
+		launcherJSON.put("Use Canidate Builds", bool);
+		try {
+			writeToFile(launcherJSON.toJSONString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
