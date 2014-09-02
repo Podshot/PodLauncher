@@ -34,7 +34,9 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 	private String RAMinitHeap;
 	private String RAMmaxHeap;
 
+	@SuppressWarnings("unchecked")
 	public LaunchMinecraft(String profile) {
+		boolean shouldFixProfile = false;
 		dwl = new DownloadVersionList();
 		dwl.addObserver(this);
 
@@ -49,13 +51,20 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		this.versionToLaunch = (String) profileJSON.get("Minecraft Version");
 		this.RAMinitHeap = (String) profileJSON.get("Init RAM Heap");
 		this.RAMmaxHeap = (String) profileJSON.get("Max RAM Heap");
+		if (this.RAMinitHeap == null || this.RAMmaxHeap == null) {
+			shouldFixProfile = true;
+		}
 		
 		if (this.RAMinitHeap == null) {
 			this.RAMinitHeap = "256M";
+			profileJSON.put("Init RAM Heap", this.RAMinitHeap);
 		}
 		if (this.RAMmaxHeap == null) {
 			this.RAMmaxHeap = "1G";
-			LauncherConfig.fixMaxHeap(profile, "1G");
+			profileJSON.put("Max RAM Heap", this.RAMmaxHeap);
+		}
+		if (shouldFixProfile) {
+			LauncherConfig.addProfileFromJSON(profileJSON);
 		}
 		try {
 			this.launch();
