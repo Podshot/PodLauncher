@@ -8,7 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -130,7 +132,6 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 		rdbtnInit512Megabytes = new JRadioButton("512 Megabytes");
 		rdbtnInit512Megabytes.setBounds(324, 57, 109, 23);
 		rdbtnInit512Megabytes.setActionCommand("512M");
-		rdbtnInit512Megabytes.addItemListener(this);
 		initRamBtnGrp.add(rdbtnInit512Megabytes);
 		rdbtnInit512Megabytes.setSelected(true);
 		getContentPane().add(rdbtnInit512Megabytes);
@@ -226,6 +227,19 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 		lblRamMaxHeap.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblRamMaxHeap.setBounds(490, 10, 134, 14);
 		getContentPane().add(lblRamMaxHeap);
+		
+
+        for (Enumeration<AbstractButton> buttons = initRamBtnGrp.getElements(); buttons.hasMoreElements();) {
+        	JRadioButton radioBtn = (JRadioButton) buttons.nextElement();
+        	
+        	radioBtn.addItemListener(this);
+        }
+        for (Enumeration<AbstractButton> buttons = maxRamBtnGrp.getElements(); buttons.hasMoreElements();) {
+        	JRadioButton radioBtn = (JRadioButton) buttons.nextElement();
+        	
+        	radioBtn.addItemListener(this);
+        }
+ 
 	}
 
 	@SuppressWarnings("unchecked")
@@ -300,10 +314,84 @@ public class ProfileGUI extends JFrame implements ActionListener, ItemListener {
 	@Override
 	public void itemStateChanged(ItemEvent itemEVT) {
 		if (itemEVT.getStateChange() == ItemEvent.SELECTED) {
-			System.out.println("Item Selected");
+			if (itemEVT.getItem() == this.rdbtnInit512Megabytes) {
+				this.rdbtnMax256Megabytes.setEnabled(false);
+				if (this.rdbtnMax256Megabytes.isSelected()) {
+					this.rdbtnMax256Megabytes.setSelected(false);
+					this.rdbtnMax512Megabytes.setSelected(true);
+				}
+			}
+			if (itemEVT.getItem() == this.rdbtnInit1Gigabyte) {
+				this.rdbtnMax512Megabytes.setEnabled(false);
+				this.rdbtnMax256Megabytes.setEnabled(false);
+				if (this.rdbtnMax256Megabytes.isSelected()) {
+					this.rdbtnMax256Megabytes.setSelected(false);
+					this.rdbtnMax1Gigabyte.setSelected(true);
+				}
+				if (this.rdbtnMax512Megabytes.isSelected()) {
+					this.rdbtnMax512Megabytes.setSelected(false);
+					this.rdbtnMax1Gigabyte.setSelected(true);
+				}
+			}
+			if (itemEVT.getItem() == this.rdbtnInit1_5Gigabytes) {
+				this.rdbtnMax256Megabytes.setEnabled(false);
+				this.rdbtnMax512Megabytes.setEnabled(false);
+				this.rdbtnMax1Gigabyte.setEnabled(false);
+				if (this.rdbtnMax256Megabytes.isSelected()) {
+					this.rdbtnMax256Megabytes.setSelected(false);
+					this.rdbtnMax1_5Gigabytes.setSelected(true);
+				}
+				if (this.rdbtnMax512Megabytes.isSelected()) {
+					this.rdbtnMax512Megabytes.setSelected(false);
+					this.rdbtnMax1_5Gigabytes.setSelected(true);
+				}
+				if (this.rdbtnMax1Gigabyte.isSelected()) {
+					this.rdbtnMax1Gigabyte.setSelected(false);
+					this.rdbtnMax1_5Gigabytes.setSelected(true);
+				}
+			}
+			if (itemEVT.getItem() == this.rdbtnInit2Gigabytes) {
+				this.rdbtnMax256Megabytes.setEnabled(false);
+				this.rdbtnMax512Megabytes.setEnabled(false);
+				this.rdbtnMax1Gigabyte.setEnabled(false);
+				this.rdbtnMax1_5Gigabytes.setEnabled(false);
+				if (this.rdbtnMax256Megabytes.isSelected()) {
+					this.rdbtnMax256Megabytes.setSelected(false);
+					this.rdbtnMax2Gigabytes.setSelected(true);
+				}
+				if (this.rdbtnMax512Megabytes.isSelected()) {
+					this.rdbtnMax512Megabytes.setSelected(false);
+					this.rdbtnMax2Gigabytes.setSelected(true);
+				}
+				if (this.rdbtnMax1Gigabyte.isSelected()) {
+					this.rdbtnMax1Gigabyte.setSelected(false);
+					this.rdbtnMax2Gigabytes.setSelected(true);
+				}
+				if (this.rdbtnMax1_5Gigabytes.isSelected()) {
+					this.rdbtnMax1_5Gigabytes.setSelected(false);
+					this.rdbtnMax2Gigabytes.setSelected(true);
+				}
+			}
 		}
 		if (itemEVT.getStateChange() == ItemEvent.DESELECTED) {
-			System.out.println("Item Deselected");
+			if (itemEVT.getItem() == this.rdbtnInit512Megabytes) {
+				this.rdbtnMax256Megabytes.setEnabled(true);
+			}
+			if (itemEVT.getItem() == this.rdbtnInit1Gigabyte) {
+				this.rdbtnMax512Megabytes.setEnabled(true);
+				this.rdbtnMax256Megabytes.setEnabled(true);
+			}
+			if (itemEVT.getItem() == this.rdbtnInit1_5Gigabytes) {
+				this.rdbtnMax256Megabytes.setEnabled(true);
+				this.rdbtnMax512Megabytes.setEnabled(true);
+				this.rdbtnMax1Gigabyte.setEnabled(true);
+			}
+			if (itemEVT.getItem() == this.rdbtnInit2Gigabytes) {
+				this.rdbtnMax256Megabytes.setEnabled(true);
+				this.rdbtnMax512Megabytes.setEnabled(true);
+				this.rdbtnMax1Gigabyte.setEnabled(true);
+				this.rdbtnMax1_5Gigabytes.setEnabled(true);
+			}
 		}
 
 	}
