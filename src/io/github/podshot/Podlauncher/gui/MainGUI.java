@@ -35,9 +35,9 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	private JLabel lblaccount;
 	private JLabel lblauth;
 	private JLabel lblskins;
-	private ImageIcon ONLINE = new ImageIcon(this.getClass().getResource("/images/redstone_lamp_on.png"));
-	private ImageIcon UNSTABLE = new ImageIcon(this.getClass().getResource("/images/redstone_lamp_unstable.png"));
-	private ImageIcon OFFLINE = new ImageIcon(this.getClass().getResource("/images/redstone_lamp_off.png"));
+	private ImageIcon ONLINE = new ImageIcon(this.getClass().getResource("/images/online.png"));
+	private ImageIcon UNSTABLE = new ImageIcon(this.getClass().getResource("/images/unstable.png"));
+	private ImageIcon OFFLINE = new ImageIcon(this.getClass().getResource("/images/offline.png"));
 	private JButton btnEditProfile;
 	private JButton btnLaunchProfile;
 	private JProgressBar progressBar;
