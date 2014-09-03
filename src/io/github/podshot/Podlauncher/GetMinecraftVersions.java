@@ -13,10 +13,17 @@ public class GetMinecraftVersions {
 
 	private static ArrayList<String> allVersions = new ArrayList<String>();
 
+	/**
+	 * Gets all of the Names of Profiles in the PodLauncher config.json
+	 * @return An array of profile name strings
+	 */
 	public static String[] getStrings() {
 		return allVersions.toArray(new String[allVersions.size()]);
 	}
 
+	/**
+	 * Setups the version list from Mojang
+	 */
 	public static void setup() {
 		JSONObject versionsJSON = null;
 		JSONParser parser = new JSONParser();
@@ -43,6 +50,12 @@ public class GetMinecraftVersions {
 
 	}
 
+	/**
+	 * Remove the version prefix from the selected version string
+	 * @param string The string to strip the version prefix from. 
+	 * Example: from 'release 1.7.10' to '1.7.10'
+	 * @return The version string
+	 */
 	public static String stripVersionPrefix(String string) {
 		String newSTR = null;
 		if (string.contains("snapshot")) {
