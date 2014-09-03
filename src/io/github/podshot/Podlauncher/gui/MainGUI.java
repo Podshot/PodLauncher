@@ -44,6 +44,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	private JPanel panel;
 	private int timesLaunched = 0;
 	private JCheckBox chckbxUseCanidateBuilds;
+	private JButton btnRemoveProfile;
 
 	public MainGUI() {
 		instance = this;
@@ -84,15 +85,21 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 
 		progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
-		progressBar.setBounds(178, 95, 380, 20);
+		progressBar.setBounds(180, 118, 380, 20);
 		progressBar.setVisible(false);
 		panel.add(progressBar);
-		
+
 		chckbxUseCanidateBuilds = new JCheckBox("Use Canidate Builds? (May contain bugs!)");
 		chckbxUseCanidateBuilds.setHorizontalAlignment(SwingConstants.CENTER);
 		chckbxUseCanidateBuilds.addItemListener(this);
+		chckbxUseCanidateBuilds.setSelected(LauncherConfig.shouldUseCanidateBuilds());
 		chckbxUseCanidateBuilds.setBounds(260, 346, 230, 23);
 		panel.add(chckbxUseCanidateBuilds);
+
+		btnRemoveProfile = new JButton("Remove Profile");
+		btnRemoveProfile.setBounds(260, 63, 130, 23);
+		btnRemoveProfile.addActionListener(this);
+		panel.add(btnRemoveProfile);
 
 		switch (CheckMojangServers.getMinecraft_net()) {
 		case ONLINE:
@@ -244,11 +251,24 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 				this.timesLaunched = this.timesLaunched  + 1;
 				System.out.println("Time the Launched button has fired: " + this.timesLaunched);
 			}
+			//String gameType = LauncherConfig.getGameType(this.profileComboBox.getSelectedItem().toString());
 			this.btnLaunchProfile.removeActionListener(this);
 			progressBar.setVisible(true);
 			this.btnLaunchProfile.setEnabled(false);
 			this.panel.repaint();
 			new LaunchMinecraft(this.profileComboBox.getSelectedItem().toString());
+			/*
+			if (gameType.equals("forge")) {
+				//TODO Forge Launching
+			} else {
+			}
+			*/
+		}
+
+		if (event.getSource() == this.btnRemoveProfile) {
+			LauncherConfig.getProfile(this.profileComboBox.getSelectedItem().toString(), true);
+			LauncherConfig.updateLastProfile(LauncherConfig.getProfiles()[0]);
+			this.refreshProfileList();
 		}
 
 	}
@@ -281,7 +301,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	public void setProgress(int arg0) {
 		this.progressBar.setValue(arg0);
 	}
-	
+
 	public void refreshProfileList() {
 		this.profileComboBox.setModel(new DefaultComboBoxModel<String>(LauncherConfig.getProfiles()));
 		this.panel.repaint();
