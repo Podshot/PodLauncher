@@ -1,5 +1,7 @@
 package io.github.podshot.Podlauncher.extras;
 
+import io.github.podshot.Podlauncher.extras.Utility.UtilityType;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,6 +12,7 @@ public class CheckMojangServers {
 	
 	private static JSONParser parser = new JSONParser();
 	
+	@Utility(UtilityType.OTHER)
 	private static ServerStatus convertStatusToENUM(String stat) {
 		if (stat.equals("green")) {
 			return ServerStatus.ONLINE;

@@ -1,6 +1,8 @@
 package io.github.podshot.Podlauncher.files;
 
 import io.github.podshot.Podlauncher.extras.Music;
+import io.github.podshot.Podlauncher.extras.Utility;
+import io.github.podshot.Podlauncher.extras.Utility.UtilityType;
 
 import java.io.File;
 import java.io.FileReader;
@@ -221,6 +223,7 @@ public class LauncherConfig {
 
 	}
 
+	@Utility(UtilityType.QUICK_FIX)
 	public static void addJSONEntry(String profile, String key, String value) {
 		JSONObject profileJSON = getProfile(profile, true);
 		profileJSON.put(key, value);
@@ -259,6 +262,7 @@ public class LauncherConfig {
 		}
 	}
 
+	@Utility(UtilityType.COMPATIBILITY)
 	public static String getGameType(String string) {
 		JSONObject profile = getProfile(string, false);
 		String gameType = (String) profile.get("Profile Type");
