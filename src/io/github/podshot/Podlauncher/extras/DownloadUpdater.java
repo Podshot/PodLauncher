@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 
 public class DownloadUpdater {
 
@@ -36,15 +37,26 @@ public class DownloadUpdater {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private static void run() throws IOException {
-		Runtime runtime = Runtime.getRuntime();
+		ArrayList<String> arguments = new ArrayList<String>();
+		arguments.add("java");
+		arguments.add("-jar");
+		arguments.add(new File("PodLauncher" + File.separator + "update" + File.separator + "Updater.jar").getAbsolutePath());
+		if (UpdateChecker.isACanidateUpdate()) {
+			arguments.add("-canidate");
+		}
+		
+		
+		ProcessBuilder pb = new ProcessBuilder(arguments);
+		pb.start();
 
+		/*
 		if (UpdateChecker.isACanidateUpdate()) {
 			Process proc = runtime.exec("java -jar \"PodLauncher" + File.separator + "update" + File.separator + "Updater.jar\" -canidate");
 		} else {
 			Process proc = runtime.exec("java -jar \"PodLauncher" + File.separator + "update" + File.separator + "Updater.jar\"");
 		}
+		*/
 		System.exit(0);
 
 	}
