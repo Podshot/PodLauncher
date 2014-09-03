@@ -236,7 +236,7 @@ public class LauncherConfig {
 			e.printStackTrace();
 		}
 
-		boolean shouldUseCanidate = new Boolean((String) launcherJSON.get("Use Canidate Builds"));
+		boolean shouldUseCanidate = (boolean) launcherJSON.get("Use Canidate Builds");
 		return shouldUseCanidate;
 	}
 	
@@ -257,5 +257,11 @@ public class LauncherConfig {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static String getGameType(String string) {
+		JSONObject profile = getProfile(string, false);
+		String gameType = (String) profile.get("Profile Type");
+		return gameType;
 	}
 }

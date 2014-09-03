@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import org.json.simple.JSONObject;
 import java.awt.Color;
 import javax.swing.UIManager;
+import javax.swing.JCheckBox;
 
 public class CreateProfileGUI extends JFrame implements ActionListener, ItemListener {
 
@@ -52,6 +53,7 @@ public class CreateProfileGUI extends JFrame implements ActionListener, ItemList
 	private JRadioButton rdbtnMax1_5Gigabytes;
 	private JRadioButton rdbtnMax2Gigabytes;
 	private JRadioButton rdbtnMaxCustom;
+	private JCheckBox chckbxForgeProfile;
 
 	public CreateProfileGUI() {
 		getContentPane().setBackground(new Color(240, 240, 240));
@@ -232,6 +234,12 @@ public class CreateProfileGUI extends JFrame implements ActionListener, ItemList
 		lblRamMaxHeap.setBounds(490, 10, 134, 14);
 		getContentPane().add(lblRamMaxHeap);
 		
+		chckbxForgeProfile = new JCheckBox("Forge Profile");
+		chckbxForgeProfile.setBounds(138, 194, 97, 23);
+		chckbxForgeProfile.addItemListener(this);
+		chckbxForgeProfile.setVisible(false);
+		getContentPane().add(chckbxForgeProfile);
+		
 
         for (Enumeration<AbstractButton> buttons = initRamBtnGrp.getElements(); buttons.hasMoreElements();) {
         	JRadioButton radioBtn = (JRadioButton) buttons.nextElement();
@@ -318,6 +326,9 @@ public class CreateProfileGUI extends JFrame implements ActionListener, ItemList
 
 	@Override
 	public void itemStateChanged(ItemEvent itemEVT) {
+		if (itemEVT.getItem() == this.chckbxForgeProfile) {
+			
+		}
 		if (itemEVT.getStateChange() == ItemEvent.SELECTED) {
 			if (itemEVT.getItem() == this.rdbtnInit512Megabytes) {
 				this.rdbtnMax256Megabytes.setEnabled(false);
