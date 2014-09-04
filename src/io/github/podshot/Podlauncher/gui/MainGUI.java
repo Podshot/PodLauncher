@@ -45,6 +45,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	private int timesLaunched = 0;
 	private JCheckBox chckbxUseCanidateBuilds;
 	private JButton btnRemoveProfile;
+	private JButton btnAboutPodlauncher;
 
 	/**
 	 * MainGUI constructor
@@ -107,6 +108,11 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		btnRemoveProfile.setBounds(260, 63, 130, 23);
 		btnRemoveProfile.addActionListener(this);
 		panel.add(btnRemoveProfile);
+		
+		btnAboutPodlauncher = new JButton("About PodLauncher");
+		btnAboutPodlauncher.setBounds(400, 63, 160, 23);
+		btnAboutPodlauncher.addActionListener(this);
+		panel.add(btnAboutPodlauncher);
 
 		// Switch statement for Mojang Server Status indicators
 		// This is snippet is repeated multiple times
@@ -253,6 +259,11 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		if (event.getSource() == this.btnCreateANew) {
 			CreateProfileGUI profGUI = new CreateProfileGUI();
 			profGUI.setVisible(true);
+		}
+		
+		if (event.getSource() == this.btnAboutPodlauncher) {
+			AboutGUI aGUI = new AboutGUI();
+			aGUI.setVisible(true);
 		}
 
 		if (event.getSource() == this.btnEditProfile) {

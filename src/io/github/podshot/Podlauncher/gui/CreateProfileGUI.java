@@ -55,6 +55,9 @@ public class CreateProfileGUI extends JFrame implements ActionListener, ItemList
 	private JRadioButton rdbtnMaxCustom;
 	private JCheckBox chckbxForgeProfile;
 
+	/**
+	 * Constructor for the Create Profile GUI
+	 */
 	public CreateProfileGUI() {
 		getContentPane().setBackground(new Color(240, 240, 240));
 		this.setTitle("Create a new Profile");
