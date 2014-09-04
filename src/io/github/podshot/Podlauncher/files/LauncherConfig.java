@@ -21,6 +21,9 @@ public class LauncherConfig {
 	private static JSONParser parser = new JSONParser();
 	private static boolean fileCreated;
 
+	/**
+	 * Checks if config.json is in the PodLauncher folder, if not, it creates a blank config.json
+	 */
 	public static void checkForFile() {
 		File launcherConfig = new File("PodLauncher" + File.separator + "config.json");
 		if (!(launcherConfig.exists())) {
@@ -46,6 +49,11 @@ public class LauncherConfig {
 		fileCreated = true;
 	}
 
+	/**
+	 * Writes the JSON formated string to the config.json
+	 * @param json The JSON string to write to the config.json file
+	 * @throws IOException Thrown when the config.json cannot be found
+	 */
 	private static void writeToFile(String json) throws IOException {
 		File launcherConfig = new File("PodLauncher" + File.separator + "config.json");
 
@@ -95,6 +103,10 @@ public class LauncherConfig {
 		}
 	}
 
+	/**
+	 * Adds a profile from a JSONObject
+	 * @param json The JSONObject that should be added to the profile list in the config.json file
+	 */
 	public static void addProfileFromJSON(JSONObject json) {
 		JSONObject launcherJSON = null;
 
@@ -120,6 +132,10 @@ public class LauncherConfig {
 		}
 	}
 
+	/**
+	 * Gets a String List of all the Profile Names in the config.json file
+	 * @return
+	 */
 	@Music(songArtist = "Monstercat", songName = "Monstercat 018 - Frontier (Horizon Album Mix)", songUrl = "http://youtu.be/of7vnz3YS-k")
 	public static String[] getProfiles() {
 
@@ -155,10 +171,10 @@ public class LauncherConfig {
 	}
 
 	/**
-	 * 
-	 * @param profileName
-	 * @param remove
-	 * @return
+	 * Gets the Profile that has the specified Profile Name
+	 * @param profileName The Name of the Profile JSONObject you want to get
+	 * @param remove True if you want to remove the Profile from the Profile List
+	 * @return The Profile JSONObject
 	 */
 	@Music(songArtist = "More Kords ft. Miyoki", songName = "Fragmentize", songUrl = "Currently Unknown")
 	public static JSONObject getProfile(String profileName, boolean remove) {
@@ -200,8 +216,8 @@ public class LauncherConfig {
 	}
 
 	/**
-	 * 
-	 * @param profile
+	 * Updates the last launched profile
+	 * @param profile The Profile Name of the Profile that was last launched
 	 */
 	public static void updateLastProfile(String profile) {
 		JSONObject launcherJSON = null;
@@ -223,6 +239,12 @@ public class LauncherConfig {
 
 	}
 
+	/**
+	 * 
+	 * @param profile
+	 * @param key
+	 * @param value
+	 */
 	@Utility(UtilityType.QUICK_FIX)
 	public static void addJSONEntry(String profile, String key, String value) {
 		JSONObject profileJSON = getProfile(profile, true);
@@ -231,6 +253,10 @@ public class LauncherConfig {
 
 	}
 
+	/**
+	 * Gets if PodLauncher should notify the user of new canidate builds
+	 * @return True if PodLauncher should notify on new canidate builds, false otherwise
+	 */
 	public static boolean shouldUseCanidateBuilds() {
 		JSONObject launcherJSON = null;
 		try {
@@ -243,6 +269,10 @@ public class LauncherConfig {
 		return shouldUseCanidate;
 	}
 	
+	/**
+	 * Sets if PodLauncher should use canidate builds in the config.json file
+	 * @param bool True if user should be notified of canidate builds, false otherwise
+	 */
 	public static void setUseCanidateBuilds(boolean bool) {
 		JSONObject launcherJSON = null;
 		try {
@@ -262,10 +292,33 @@ public class LauncherConfig {
 		}
 	}
 
+	/**
+	 * Gets the Game Type of the specified profile
+	 * @param string The profile name to get the Game Type of
+	 * @return When Forge compatability is complete, this will either return 'VANILLA' or 'FORGE'
+	 */
 	@Utility(UtilityType.COMPATIBILITY)
 	public static String getGameType(String string) {
 		JSONObject profile = getProfile(string, false);
 		String gameType = (String) profile.get("Profile Type");
 		return gameType;
+	}
+	
+	/**
+	 * Gets the current config version that PodLauncher can read
+	 * @return
+	 */
+	@Utility(UtilityType.COMPATIBILITY)
+	public static int getCurrentLauncherConfigVersion() {
+		return 2;
+	}
+	
+	/**
+	 * Gets the active config version present in the PodLauncher folder
+	 * @return
+	 */
+	@Utility(UtilityType.COMPATIBILITY)
+	public static int getActiveLauncherConfigVersion() {
+		return 0;
 	}
 }
