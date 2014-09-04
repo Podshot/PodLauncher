@@ -34,6 +34,10 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 	private String RAMinitHeap;
 	private String RAMmaxHeap;
 
+	/**
+	 * Starts the Launch methods for the specified profile
+	 * @param profile The profile to launch
+	 */
 	@SuppressWarnings("unchecked")
 	public LaunchMinecraft(String profile) {
 		boolean shouldFixProfile = false;
@@ -74,6 +78,12 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 
 	}
 
+	/**
+	 * Logins to Mojang's servers
+	 * @param mc The Minecraft instance to launch from
+	 * @return An ISession for the specified profile
+	 * @throws Exception Thrown in case something doesn't behave
+	 */
 	public ISession login(IMinecraftInstance mc) throws Exception {
 		ISession result = null;
 		IProfile profile = new LegacyProfile(this.username, new String(this.password));
@@ -84,6 +94,10 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		return result;
 	}
 
+	/**
+	 * Launch method to launch the entire game
+	 * @throws Exception Thrown in case launching doesn't work
+	 */
 	public void launch() throws Exception {
 		MinecraftInstance mc = new MinecraftInstance(this.gameDir);
 
@@ -141,6 +155,11 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		}
 	}
 
+	/**
+	 * Check if the specified process is still running
+	 * @param proc The Process to check on
+	 * @return True if the Process is still running, false otherwise
+	 */
 	private boolean isProcessAlive(Process proc) {
 		try {
 			proc.exitValue();
@@ -150,6 +169,9 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		}
 	}
 
+	/**
+	 * Gets all available versions to launch
+	 */
 	@Override
 	public void onUpdate(IObservable<IVersion> arg0, IVersion arg1) {
 		if (arg1.getId().equals(this.versionToLaunch)) {

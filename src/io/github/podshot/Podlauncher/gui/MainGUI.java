@@ -46,7 +46,11 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	private JCheckBox chckbxUseCanidateBuilds;
 	private JButton btnRemoveProfile;
 
+	/**
+	 * MainGUI constructor
+	 */
 	public MainGUI() {
+		// Binds the instance to the static field 'instance'
 		instance = this;
 		this.setTitle("PodLauncher");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,11 +62,13 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
+		// Sets up the profile list
 		profileComboBox = new JComboBox<String>();
 		profileComboBox.setModel(new DefaultComboBoxModel<String>(LauncherConfig.getProfiles()));
 		profileComboBox.setBounds(10, 30, 230, 20);
 		panel.add(profileComboBox);
 
+		// Sets up the Create profile button
 		btnCreateANew = new JButton("Create a new Profile");
 		btnCreateANew.setBounds(260, 29, 160, 23);
 		btnCreateANew.addActionListener(this);
@@ -83,6 +89,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		lblPodlauncherVersion.setBounds(10, 350, 230, 14);
 		panel.add(lblPodlauncherVersion);
 
+		// Launching progressbar, not visible until a profile is launched
 		progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
 		progressBar.setBounds(180, 118, 380, 20);
@@ -101,8 +108,11 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		btnRemoveProfile.addActionListener(this);
 		panel.add(btnRemoveProfile);
 
+		// Switch statement for Mojang Server Status indicators
+		// This is snippet is repeated multiple times
 		switch (CheckMojangServers.getMinecraft_net()) {
 		case ONLINE:
+			// If the ServerStatus ENUM value is ONLINE, show a full lit redstone lamp
 			lblminecraft_net = new JLabel("");
 			lblminecraft_net.setToolTipText("Minecraft.net is Online");
 			lblminecraft_net.setIcon(this.ONLINE);
@@ -110,6 +120,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 			panel.add(lblminecraft_net);
 			break;
 		case UNSTABLE:
+			// If the ServerStatus ENUM value is UNSTABLE, show a half lit redstone lamp
 			lblminecraft_net = new JLabel("");
 			lblminecraft_net.setToolTipText("Minecraft.net is Unstable");
 			lblminecraft_net.setIcon(this.UNSTABLE);
@@ -117,6 +128,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 			panel.add(lblminecraft_net);
 			break;
 		case OFFLINE:
+			// If the ServerStatus ENUM value is OFFLINE, show a unlit redstone lamp
 			lblminecraft_net = new JLabel("");
 			lblminecraft_net.setToolTipText("Minecraft.net is Offline");
 			lblminecraft_net.setIcon(this.OFFLINE);
@@ -233,6 +245,9 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	}
 
 
+	/**
+	 * Action Event listening method
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == this.btnCreateANew) {
@@ -274,11 +289,16 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	}
 
 
+	/**
+	 * Gets the current MainGUI instance
+	 * @return The current instance of MainGUI
+	 */
 	public static MainGUI getInstance() {
 		return instance;
 	}
 
 
+	
 	@Override
 	public void finish() {
 		this.progressBar.setValue(this.progressBar.getMaximum());
@@ -308,6 +328,9 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	}
 
 
+	/**
+	 * Item State Change Event listener, used for the Canidate Build checkbox
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent evt) {
 		if (evt.getItem() == this.chckbxUseCanidateBuilds) {
