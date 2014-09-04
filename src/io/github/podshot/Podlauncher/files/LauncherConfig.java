@@ -3,6 +3,7 @@ package io.github.podshot.Podlauncher.files;
 import io.github.podshot.Podlauncher.extras.Music;
 import io.github.podshot.Podlauncher.extras.Utility;
 import io.github.podshot.Podlauncher.extras.Utility.UtilityType;
+import io.github.podshot.Podlauncher.gui.ErrorGUI;
 
 import java.io.File;
 import java.io.FileReader;
@@ -30,6 +31,7 @@ public class LauncherConfig {
 			try {
 				launcherConfig.createNewFile();
 			} catch (IOException e) {
+				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "checkForFile()");
 				e.printStackTrace();
 			}
 
@@ -42,7 +44,7 @@ public class LauncherConfig {
 			try {
 				writeToFile(mainJSON.toJSONString());
 			} catch (IOException e) {
-				e.printStackTrace();
+				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "checkForFile()");
 			}
 
 		}
@@ -81,7 +83,7 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			System.out.println("Could not read config.json");
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "addProfile()");
 		}
 
 		JSONArray profileList = (JSONArray) launcherJSON.get("Profiles");
@@ -113,7 +115,7 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "addProfileFromJSON()");
 		}
 
 		JSONArray profileArray = (JSONArray) launcherJSON.get("Profiles");
@@ -128,6 +130,7 @@ public class LauncherConfig {
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "addProfileFromJSON()");
 			e.printStackTrace();
 		}
 	}
@@ -151,7 +154,7 @@ public class LauncherConfig {
 		try {
 			json = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getProfiles()");
 		}
 
 		String lastProfile = (String) json.get("Last Profile");
@@ -188,8 +191,7 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getProfile()");
 		}
 
 		JSONArray profiles = (JSONArray) launcherJSON.get("Profiles");
@@ -208,7 +210,7 @@ public class LauncherConfig {
 			try {
 				writeToFile(launcherJSON.toJSONString());
 			} catch (IOException e) {
-				e.printStackTrace();
+				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getProfile()");
 			}
 		}
 
@@ -224,8 +226,7 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "updateLastProfile()");
 		}
 
 		launcherJSON.remove("Last Profile");
@@ -234,7 +235,7 @@ public class LauncherConfig {
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "updateLastProfile()");
 		}
 
 	}
@@ -262,13 +263,13 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "shouldUseCanidateBuilds()");
 		}
 
 		boolean shouldUseCanidate = (boolean) launcherJSON.get("Use Canidate Builds");
 		return shouldUseCanidate;
 	}
-	
+
 	/**
 	 * Sets if PodLauncher should use canidate builds in the config.json file
 	 * @param bool True if user should be notified of canidate builds, false otherwise
@@ -278,9 +279,9 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "setUseCanidateBuilds()");
 		}
-		
+
 		if (launcherJSON.containsKey("Use Canidate Builds")) {
 			launcherJSON.remove("Use Canidate Builds");
 		}
@@ -288,6 +289,7 @@ public class LauncherConfig {
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "setUseCanidateBuilds()");
 			e.printStackTrace();
 		}
 	}
@@ -303,7 +305,7 @@ public class LauncherConfig {
 		String gameType = (String) profile.get("Profile Type");
 		return gameType;
 	}
-	
+
 	/**
 	 * Gets the current config version that PodLauncher can read
 	 * @return
@@ -312,13 +314,30 @@ public class LauncherConfig {
 	public static int getCurrentLauncherConfigVersion() {
 		return 2;
 	}
-	
+
 	/**
 	 * Gets the active config version present in the PodLauncher folder
 	 * @return
 	 */
 	@Utility(UtilityType.COMPATIBILITY)
 	public static int getActiveLauncherConfigVersion() {
-		return 0;
+		JSONObject launcherJSON = null;
+		try {
+			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
+		} catch (IOException | ParseException e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getActiveLauncherConfigVersion()");
+		}
+		if (launcherJSON.containsKey("Launcher Config Version")) {
+			int configVersion = (int) launcherJSON.get("Launcher Config Version");
+			return configVersion;
+		} else {
+			launcherJSON.put("Launcher Config Version", getCurrentLauncherConfigVersion());
+			try {
+				writeToFile(launcherJSON.toJSONString());
+			} catch (IOException e) {
+				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getActiveLauncherConfigVersion()");
+			}
+		}
+		return getCurrentLauncherConfigVersion();
 	}
 }

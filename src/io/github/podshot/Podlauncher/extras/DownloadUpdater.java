@@ -1,6 +1,7 @@
 package io.github.podshot.Podlauncher.extras;
 
 import io.github.podshot.Podlauncher.UpdateChecker;
+import io.github.podshot.Podlauncher.gui.ErrorGUI;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,11 +29,12 @@ public class DownloadUpdater {
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "download()");
 		}
 		try {
 			run();
 		} catch (IOException e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "download()");
 			e.printStackTrace();
 		}
 	}

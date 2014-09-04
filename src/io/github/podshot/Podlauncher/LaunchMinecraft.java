@@ -2,6 +2,7 @@ package io.github.podshot.Podlauncher;
 
 import io.github.podshot.Podlauncher.extras.DownloadVersionList;
 import io.github.podshot.Podlauncher.files.LauncherConfig;
+import io.github.podshot.Podlauncher.gui.ErrorGUI;
 import io.github.podshot.Podlauncher.gui.MainGUI;
 
 import java.io.BufferedReader;
@@ -73,7 +74,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		try {
 			this.launch();
 		} catch (Exception e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "LaunchMinecraft()");
 		}
 
 	}
@@ -179,7 +180,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 			try {
 				this.launch();
 			} catch (Exception e) {
-				e.printStackTrace();
+				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "onUpdate()");
 			}
 		}
 	}

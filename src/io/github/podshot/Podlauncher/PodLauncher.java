@@ -2,11 +2,13 @@ package io.github.podshot.Podlauncher;
 
 import io.github.podshot.Podlauncher.extras.DownloadUpdater;
 import io.github.podshot.Podlauncher.files.LauncherConfig;
+import io.github.podshot.Podlauncher.gui.ErrorGUI;
 import io.github.podshot.Podlauncher.gui.MainGUI;
 
 import java.io.File;
 
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class PodLauncher {
 
@@ -15,9 +17,13 @@ public class PodLauncher {
 	 * @param args Arguments for PodLauncher, '-updated' is currently the only one supported
 	 * @throws Exception
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		// Sets the UI Look and Feel from Java's default layout to the OS specific one
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "main()");
+		}
 		// Loops through the specified arguments
 		for (String argument : args) {
 			// If an argument equals '-updated' cleanup the files left over from the update process
@@ -26,7 +32,11 @@ public class PodLauncher {
 			}
 		}
 		// Checks for an update
-		new UpdateChecker();
+		try {
+			new UpdateChecker();
+		} catch (Exception e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "main()");
+		}
 		// Checks to see if the folder 'PodLauncher' exists in the current working directory
 		// If not create the folder
 		File launcherFolder = new File("PodLauncher");

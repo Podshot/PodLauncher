@@ -1,5 +1,7 @@
 package io.github.podshot.Podlauncher;
 
+import io.github.podshot.Podlauncher.gui.ErrorGUI;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -30,7 +32,7 @@ public class GetMinecraftVersions {
 		try {
 			versionsJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "setup()");
 		}
 
 		JSONArray versions = (JSONArray) versionsJSON.get("versions");

@@ -1,6 +1,7 @@
 package io.github.podshot.Podlauncher.extras;
 
 import io.github.podshot.Podlauncher.extras.Utility.UtilityType;
+import io.github.podshot.Podlauncher.gui.ErrorGUI;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -39,7 +40,7 @@ public class CheckMojangServers {
 			status = (JSONArray) parser.parse(HttpUtils.httpGet("http://status.mojang.com/check"));
 		} catch (Exception e) {
 			System.out.println("Could not parse Minecraft Server Status");
-			e.printStackTrace();
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getStatusJSON()");
 		}
 		return status;
 		
