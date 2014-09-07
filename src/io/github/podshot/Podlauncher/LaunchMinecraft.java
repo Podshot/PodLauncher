@@ -56,6 +56,12 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		this.versionToLaunch = (String) profileJSON.get("Minecraft Version");
 		this.RAMinitHeap = (String) profileJSON.get("Init RAM Heap");
 		this.RAMmaxHeap = (String) profileJSON.get("Max RAM Heap");
+		if (this.versionToLaunch == "<Latest Release>") {
+			this.versionToLaunch = GetMinecraftVersions.getLatestRelease();
+		}
+		if (this.versionToLaunch == "<Latest Snapshot>") {
+			this.versionToLaunch = GetMinecraftVersions.getLatestSnapshot();
+		}
 		if (this.RAMinitHeap == null || this.RAMmaxHeap == null) {
 			shouldFixProfile = true;
 		}

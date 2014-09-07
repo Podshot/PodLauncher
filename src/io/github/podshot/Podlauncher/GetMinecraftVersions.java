@@ -22,6 +22,34 @@ public class GetMinecraftVersions {
 	public static String[] getStrings() {
 		return allVersions.toArray(new String[allVersions.size()]);
 	}
+	
+	public static String getLatestRelease() {
+		JSONParser parser = new JSONParser();
+		JSONObject versionJSON = null;
+		
+		try {
+			versionJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
+		} catch (Exception e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getLatestRelease()");
+		}
+		JSONObject latestJSONOBJ = (JSONObject) versionJSON.get("latest");
+		
+		return (String) latestJSONOBJ.get("release");
+	}
+	
+	public static String getLatestSnapshot() {
+		JSONParser parser = new JSONParser();
+		JSONObject versionJSON = null;
+		
+		try {
+			versionJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
+		} catch (Exception e) {
+			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getLatestRelease()");
+		}
+		JSONObject latestJSONOBJ = (JSONObject) versionJSON.get("latest");
+		
+		return (String) latestJSONOBJ.get("snapshot");
+	}
 
 	/**
 	 * Setups the version list from Mojang
@@ -36,6 +64,8 @@ public class GetMinecraftVersions {
 		}
 
 		JSONArray versions = (JSONArray) versionsJSON.get("versions");
+		allVersions.add("<Latest Snapshot>");
+		allVersions.add("<Latest Release>");
 
 		@SuppressWarnings("unchecked")
 		Iterator<JSONObject> iter = versions.iterator();

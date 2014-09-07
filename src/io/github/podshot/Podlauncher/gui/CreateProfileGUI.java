@@ -236,25 +236,25 @@ public class CreateProfileGUI extends JFrame implements ActionListener, ItemList
 		lblRamMaxHeap.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblRamMaxHeap.setBounds(490, 10, 134, 14);
 		getContentPane().add(lblRamMaxHeap);
-		
+
 		chckbxForgeProfile = new JCheckBox("Forge Profile");
 		chckbxForgeProfile.setBounds(138, 194, 97, 23);
 		chckbxForgeProfile.addItemListener(this);
 		chckbxForgeProfile.setVisible(false);
 		getContentPane().add(chckbxForgeProfile);
-		
 
-        for (Enumeration<AbstractButton> buttons = initRamBtnGrp.getElements(); buttons.hasMoreElements();) {
-        	JRadioButton radioBtn = (JRadioButton) buttons.nextElement();
-        	
-        	radioBtn.addItemListener(this);
-        }
-        for (Enumeration<AbstractButton> buttons = maxRamBtnGrp.getElements(); buttons.hasMoreElements();) {
-        	JRadioButton radioBtn = (JRadioButton) buttons.nextElement();
-        	
-        	radioBtn.addItemListener(this);
-        }
- 
+
+		for (Enumeration<AbstractButton> buttons = initRamBtnGrp.getElements(); buttons.hasMoreElements();) {
+			JRadioButton radioBtn = (JRadioButton) buttons.nextElement();
+
+			radioBtn.addItemListener(this);
+		}
+		for (Enumeration<AbstractButton> buttons = maxRamBtnGrp.getElements(); buttons.hasMoreElements();) {
+			JRadioButton radioBtn = (JRadioButton) buttons.nextElement();
+
+			radioBtn.addItemListener(this);
+		}
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -267,7 +267,11 @@ public class CreateProfileGUI extends JFrame implements ActionListener, ItemList
 			profile.put("Username", this.textFieldUsername.getText());
 			profile.put("Password", new String(this.passwordFieldPassword.getPassword()));
 			profile.put("Game Directory", this.textFieldGameDir.getText());
-			profile.put("Minecraft Version", GetMinecraftVersions.stripVersionPrefix(this.comboBox.getSelectedItem().toString()));
+			if (!(this.comboBox.getSelectedItem().toString() == "<Latest Release>" || this.comboBox.getSelectedItem().toString() == "<Latest Snapshot>")) {
+				profile.put("Minecraft Version", GetMinecraftVersions.stripVersionPrefix(this.comboBox.getSelectedItem().toString()));
+			} else {
+					profile.put("Minecraft Version", this.comboBox.getSelectedItem().toString());
+			}
 			switch (initRamBtnGrp.getSelection().getActionCommand()) {
 			default:
 				break;
@@ -330,7 +334,7 @@ public class CreateProfileGUI extends JFrame implements ActionListener, ItemList
 	@Override
 	public void itemStateChanged(ItemEvent itemEVT) {
 		if (itemEVT.getItem() == this.chckbxForgeProfile) {
-			
+
 		}
 		if (itemEVT.getStateChange() == ItemEvent.SELECTED) {
 			if (itemEVT.getItem() == this.rdbtnInit512Megabytes) {
