@@ -286,6 +286,9 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 				this.timesLaunched = this.timesLaunched  + 1;
 				System.out.println("Time the Launched button has fired: " + this.timesLaunched);
 			}
+			if (this.timesLaunched > 1) {
+				return;
+			}
 			//String gameType = LauncherConfig.getGameType(this.profileComboBox.getSelectedItem().toString());
 			this.btnLaunchProfile.removeActionListener(this);
 			progressBar.setVisible(true);
