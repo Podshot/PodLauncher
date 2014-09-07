@@ -30,21 +30,22 @@ public class ErrorGUI extends JFrame implements ActionListener {
 		JLabel lblErrorName = new JLabel("Error Name: ");
 		lblErrorName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblErrorName.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblErrorName.setBounds(110, 55, 83, 14);
+		lblErrorName.setBounds(10, 55, 83, 14);
 		getContentPane().add(lblErrorName);
 
 		JLabel labelErrorName = new JLabel(msg);
-		labelErrorName.setBounds(190, 55, 290, 14);
+		labelErrorName.setBounds(90, 55, 384, 14);
+		labelErrorName.setToolTipText(msg);
 		getContentPane().add(labelErrorName);
 
 		JLabel lblCaughtBy = new JLabel("Caught By: ");
 		lblCaughtBy.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblCaughtBy.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCaughtBy.setBounds(110, 80, 83, 14);
+		lblCaughtBy.setBounds(10, 80, 83, 14);
 		getContentPane().add(lblCaughtBy);
 
 		JLabel labelCaughtBy = new JLabel(caughtBy);
-		labelCaughtBy.setBounds(190, 80, 290, 14);
+		labelCaughtBy.setBounds(90, 80, 290, 14);
 		getContentPane().add(labelCaughtBy);
 
 		JTextPane textArea = new JTextPane();
@@ -55,28 +56,11 @@ public class ErrorGUI extends JFrame implements ActionListener {
 		}
 		textArea.setBounds(10, 105, 464, 125);
 		getContentPane().add(textArea);
-
-		JLabel lblCausedBy = new JLabel("Caused by: ");
-		lblCausedBy.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCausedBy.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCausedBy.setBounds(290, 55, 70, 14);
-		getContentPane().add(lblCausedBy);
-
-		if (throwableCause != null) {
-			JLabel label = new JLabel(throwableCause.getMessage());
-			label.setBounds(361, 55, 93, 14);
-			getContentPane().add(label);
-		} else {
-			JLabel label = new JLabel("null");
-			label.setBounds(361, 55, 93, 14);
-			getContentPane().add(label);
-		}
 		this.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 }
