@@ -46,7 +46,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		dwl.addObserver(this);
 
 		dwl.start();
-		
+
 		LauncherConfig.updateLastProfile(profile);
 
 		JSONObject profileJSON = LauncherConfig.getProfile(profile, false);
@@ -65,7 +65,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		if (this.RAMinitHeap == null || this.RAMmaxHeap == null) {
 			shouldFixProfile = true;
 		}
-		
+
 		if (this.RAMinitHeap == null) {
 			this.RAMinitHeap = "256M";
 			profileJSON.put("Init RAM Heap", this.RAMinitHeap);
@@ -151,14 +151,18 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 			public boolean isModifyAppletOptions() {
 				return false;
 			}
-			
+
 		});
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream())); 
-		while (isProcessAlive(proc)) { 
-			String line = br.readLine(); 
-			if (line != null && line.length() > 0) 
-				System.out.println(line); 
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));  
+		while (isProcessAlive(proc)) {  
+			String line = br.readLine();  
+			if (line != null && line.length() > 0) {
+				if (line.contains("textures-atlas")) {
+					System.exit(0);
+				}
+				System.out.println(line);  
+			}
 		}
 	}
 
