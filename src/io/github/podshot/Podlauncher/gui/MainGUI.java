@@ -4,6 +4,7 @@ import io.github.podshot.Podlauncher.LaunchMinecraft;
 import io.github.podshot.Podlauncher.PodLauncher;
 import io.github.podshot.Podlauncher.extras.CheckMojangServers;
 import io.github.podshot.Podlauncher.files.LauncherConfig;
+import io.github.podshot.Podlauncher.files.ProfileZipper;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,8 @@ import sk.tomsik68.mclauncher.api.ui.IProgressMonitor;
 import javax.swing.JProgressBar;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
+
+import org.json.simple.JSONObject;
 
 public class MainGUI extends JFrame implements ActionListener, IProgressMonitor, ItemListener {
 
@@ -46,6 +49,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	private JCheckBox chckbxUseCanidateBuilds;
 	private JButton btnRemoveProfile;
 	private JButton btnAboutPodlauncher;
+	private JButton btnZipProfile;
 
 	/**
 	 * MainGUI constructor
@@ -93,7 +97,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		// Launching progressbar, not visible until a profile is launched
 		progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
-		progressBar.setBounds(180, 118, 380, 20);
+		progressBar.setBounds(73, 130, 380, 20);
 		progressBar.setVisible(false);
 		panel.add(progressBar);
 
@@ -113,6 +117,11 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		btnAboutPodlauncher.setBounds(400, 63, 160, 23);
 		btnAboutPodlauncher.addActionListener(this);
 		panel.add(btnAboutPodlauncher);
+		
+		btnZipProfile = new JButton("Zip Profile");
+		btnZipProfile.setBounds(151, 70, 89, 23);
+		btnZipProfile.addActionListener(this);
+		panel.add(btnZipProfile);
 
 		// Switch statement for Mojang Server Status indicators
 		// This is snippet is repeated multiple times
@@ -295,6 +304,11 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 			LauncherConfig.getProfile(this.profileComboBox.getSelectedItem().toString(), true);
 			LauncherConfig.updateLastProfile(LauncherConfig.getProfiles()[0]);
 			this.refreshProfileList();
+		}
+		
+		if (event.getSource() == this.btnZipProfile) {
+			JSONObject profile = LauncherConfig.getProfile(this.profileComboBox.getSelectedItem().toString(), false);
+			new ProfileZipper((String) profile.get("Game Directory"));
 		}
 
 	}
