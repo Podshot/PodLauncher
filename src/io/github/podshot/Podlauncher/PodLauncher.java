@@ -64,7 +64,7 @@ public class PodLauncher {
 	 * @return The Version number
 	 */
 	public static String getVersion() {
-		return "0.0.5";
+		return "0.0.8.1";
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class PodLauncher {
 	 * @return True if PodLauncher is in Debug mode, false otherwise
 	 */
 	public static boolean inDebugMode() {
-		return true;
+		return false;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class PodLauncher {
 	 * @return True if PodLauncher is in Development mode, false otherwise
 	 */
 	public static boolean isDevMode() {
-		return true;
+		return false;
 	}
 	
 	/**

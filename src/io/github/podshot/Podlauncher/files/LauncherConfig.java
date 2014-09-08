@@ -266,7 +266,7 @@ public class LauncherConfig {
 			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "shouldUseCanidateBuilds()");
 		}
 
-		boolean shouldUseCanidate = (boolean) launcherJSON.get("Use Canidate Builds");
+		boolean shouldUseCanidate = Boolean.parseBoolean((String) launcherJSON.get("Use Canidate Builds"));
 		return shouldUseCanidate;
 	}
 
