@@ -15,17 +15,16 @@ import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import sk.tomsik68.mclauncher.api.ui.IProgressMonitor;
 import javax.swing.JProgressBar;
-import javax.swing.JCheckBox;
-import javax.swing.SwingConstants;
 
 import org.json.simple.JSONObject;
+
+import sk.tomsik68.mclauncher.api.ui.IProgressMonitor;
 
 public class MainGUI extends JFrame implements ActionListener, IProgressMonitor, ItemListener {
 
@@ -101,12 +100,14 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		progressBar.setVisible(false);
 		panel.add(progressBar);
 
+		/*
 		chckbxUseCanidateBuilds = new JCheckBox("Use Canidate Builds? (May contain bugs!)");
 		chckbxUseCanidateBuilds.setHorizontalAlignment(SwingConstants.CENTER);
 		chckbxUseCanidateBuilds.addItemListener(this);
 		chckbxUseCanidateBuilds.setSelected(LauncherConfig.shouldUseCanidateBuilds());
 		chckbxUseCanidateBuilds.setBounds(260, 346, 230, 23);
 		panel.add(chckbxUseCanidateBuilds);
+		*/
 
 		btnRemoveProfile = new JButton("Remove Profile");
 		btnRemoveProfile.setBounds(260, 63, 130, 23);

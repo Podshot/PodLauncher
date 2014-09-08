@@ -64,7 +64,7 @@ public class PodLauncher {
 	 * @return The Version number
 	 */
 	public static String getVersion() {
-		return "0.0.7.1";
+		return "0.0.7.2";
 	}
 
 	/**
