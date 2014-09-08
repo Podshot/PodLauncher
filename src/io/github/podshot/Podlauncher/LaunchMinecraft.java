@@ -41,7 +41,6 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 	 */
 	@SuppressWarnings("unchecked")
 	public LaunchMinecraft(String profile) {
-		PodLauncher.getLogger().info("Launching Minecraft...");
 		boolean shouldFixProfile = false;
 		dwl = new DownloadVersionList();
 		dwl.addObserver(this);
@@ -160,6 +159,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 			String line = br.readLine();  
 			if (line != null && line.length() > 0) {
 				if (line.contains("textures-atlas")) {
+					br.close();
 					System.exit(0);
 				}
 				System.out.println(line);  
