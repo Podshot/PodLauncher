@@ -123,6 +123,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		btnZipProfile.addActionListener(this);
 		panel.add(btnZipProfile);
 
+		PodLauncher.getLogger().info("Checking Mojang Server Status");
 		// Switch statement for Mojang Server Status indicators
 		// This is snippet is repeated multiple times
 		switch (CheckMojangServers.getMinecraft_net()) {

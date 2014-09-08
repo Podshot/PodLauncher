@@ -6,11 +6,14 @@ import io.github.podshot.Podlauncher.gui.ErrorGUI;
 import io.github.podshot.Podlauncher.gui.MainGUI;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class PodLauncher {
+
+	private static Logger logger;
 
 	/**
 	 * Method for setting up PodLauncher
@@ -18,6 +21,7 @@ public class PodLauncher {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
+		logger = Logger.getLogger("PodLauncher");
 		// Sets the UI Look and Feel from Java's default layout to the OS specific one
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -32,6 +36,7 @@ public class PodLauncher {
 			}
 		}
 		// Checks for an update
+		logger.info("Checking for Updates");
 		try {
 			new UpdateChecker();
 		} catch (Exception e) {
@@ -43,9 +48,11 @@ public class PodLauncher {
 		if (!(launcherFolder.exists())) {
 			launcherFolder.mkdir();
 		}
+		logger.info("Checking for PodLauncher's config file");
 		// Checks if the config.json file is present
 		LauncherConfig.checkForFile();
 
+		logger.info("Setting up Main GUI");
 		// Sets up the MainGUI and makes it visible
 		MainGUI mainGUI = new MainGUI();
 		mainGUI.setVisible(true);
@@ -82,5 +89,13 @@ public class PodLauncher {
 	 */
 	public static boolean isDevMode() {
 		return true;
+	}
+	
+	/**
+	 * Gets the PodLauncher Logger
+	 * @return PodLauncher's Logger
+	 */
+	public static Logger getLogger() {
+		return logger;
 	}
 }

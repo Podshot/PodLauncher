@@ -41,6 +41,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 	 */
 	@SuppressWarnings("unchecked")
 	public LaunchMinecraft(String profile) {
+		PodLauncher.getLogger().info("Launching Minecraft...");
 		boolean shouldFixProfile = false;
 		dwl = new DownloadVersionList();
 		dwl.addObserver(this);
