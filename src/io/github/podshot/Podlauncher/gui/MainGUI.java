@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 
 import org.json.simple.JSONObject;
 
@@ -37,9 +38,9 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	private JLabel lblaccount;
 	private JLabel lblauth;
 	private JLabel lblskins;
-	private ImageIcon ONLINE = new ImageIcon(this.getClass().getResource("/images/online.png"));
-	private ImageIcon UNSTABLE = new ImageIcon(this.getClass().getResource("/images/unstable.png"));
-	private ImageIcon OFFLINE = new ImageIcon(this.getClass().getResource("/images/offline.png"));
+	private ImageIcon ONLINE = new ImageIcon(this.getClass().getResource("/images/online-32x32.png"));
+	private ImageIcon UNSTABLE = new ImageIcon(this.getClass().getResource("/images/unstable-32x32.png"));
+	private ImageIcon OFFLINE = new ImageIcon(this.getClass().getResource("/images/offline-32x32.png"));
 	private JButton btnEditProfile;
 	private JButton btnLaunchProfile;
 	private JProgressBar progressBar;
@@ -100,22 +101,22 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		progressBar.setVisible(false);
 		panel.add(progressBar);
 
-		/*
+		
 		chckbxUseCanidateBuilds = new JCheckBox("Use Canidate Builds? (May contain bugs!)");
 		chckbxUseCanidateBuilds.setHorizontalAlignment(SwingConstants.CENTER);
 		chckbxUseCanidateBuilds.addItemListener(this);
 		chckbxUseCanidateBuilds.setSelected(LauncherConfig.shouldUseCanidateBuilds());
 		chckbxUseCanidateBuilds.setBounds(260, 346, 230, 23);
 		panel.add(chckbxUseCanidateBuilds);
-		*/
+		
 
 		btnRemoveProfile = new JButton("Remove Profile");
-		btnRemoveProfile.setBounds(260, 63, 130, 23);
+		btnRemoveProfile.setBounds(260, 70, 130, 23);
 		btnRemoveProfile.addActionListener(this);
 		panel.add(btnRemoveProfile);
 		
 		btnAboutPodlauncher = new JButton("About PodLauncher");
-		btnAboutPodlauncher.setBounds(400, 63, 160, 23);
+		btnAboutPodlauncher.setBounds(400, 70, 160, 23);
 		btnAboutPodlauncher.addActionListener(this);
 		panel.add(btnAboutPodlauncher);
 		
