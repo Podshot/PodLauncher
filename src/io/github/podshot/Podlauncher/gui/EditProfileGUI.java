@@ -112,6 +112,7 @@ public class EditProfileGUI extends JFrame implements ActionListener, ItemListen
 		comboBox = new JComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(GetMinecraftVersions.getStrings()));
 		comboBox.setBounds(140, 127, 136, 20);
+		comboBox.setSelectedItem((String) profile.get("Minecraft Version"));
 		getContentPane().add(comboBox);
 
 		btnCreateProfile = new JButton("Save Profile");
@@ -328,7 +329,11 @@ public class EditProfileGUI extends JFrame implements ActionListener, ItemListen
 		profileJSON.put("Profile Name", this.textFieldProfileName.getText());
 		profileJSON.put("Username", this.textFieldUsername.getText());
 		profileJSON.put("Password", new String(this.passwordFieldPassword.getPassword()));
-		profileJSON.put("Minecraft Version", GetMinecraftVersions.stripVersionPrefix(this.comboBox.getSelectedItem().toString()));
+		if (!(this.comboBox.getSelectedItem().equals("<Latest Release>") || this.comboBox.getSelectedItem().equals("<Latest Snapshot>"))) {
+			profileJSON.put("Minecraft Version", GetMinecraftVersions.stripVersionPrefix(this.comboBox.getSelectedItem().toString()));
+		} else {
+			profileJSON.put("Minecraft Version", this.comboBox.getSelectedItem().toString());
+		}
 		profileJSON.put("Game Directory", this.textFieldGameDir.getText());
 		switch (initRamBtnGrp.getSelection().getActionCommand()) {
 		default:
