@@ -40,7 +40,7 @@ public class CheckMojangServers {
 			status = (JSONArray) parser.parse(HttpUtils.httpGet("http://status.mojang.com/check"));
 		} catch (Exception e) {
 			System.out.println("Could not parse Minecraft Server Status");
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getStatusJSON()");
+			new ErrorGUI(e);
 		}
 		return status;
 		

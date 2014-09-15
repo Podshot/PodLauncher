@@ -22,7 +22,10 @@ public class PodLauncher {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "main()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 		// Loops through the specified arguments
 		for (String argument : args) {
@@ -35,7 +38,10 @@ public class PodLauncher {
 		try {
 			new UpdateChecker();
 		} catch (Exception e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "main()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 		// Checks to see if the folder 'PodLauncher' exists in the current working directory
 		// If not create the folder
@@ -73,7 +79,7 @@ public class PodLauncher {
 	 * @return True if PodLauncher is in Debug mode, false otherwise
 	 */
 	public static boolean inDebugMode() {
-		return false;
+		return true;
 	}
 
 	/**
@@ -81,6 +87,6 @@ public class PodLauncher {
 	 * @return True if PodLauncher is in Development mode, false otherwise
 	 */
 	public static boolean isDevMode() {
-		return false;
+		return true;
 	}
 }

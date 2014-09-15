@@ -45,7 +45,6 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		dwl = new DownloadVersionList();
 		dwl.addObserver(this);
 
-		dwl.start();
 
 		LauncherConfig.updateLastProfile(profile);
 
@@ -56,10 +55,10 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		this.versionToLaunch = (String) profileJSON.get("Minecraft Version");
 		this.RAMinitHeap = (String) profileJSON.get("Init RAM Heap");
 		this.RAMmaxHeap = (String) profileJSON.get("Max RAM Heap");
-		if (this.versionToLaunch == "<Latest Release>") {
+		if (this.versionToLaunch.equals("<Latest Release>")) {
 			this.versionToLaunch = GetMinecraftVersions.getLatestRelease();
 		}
-		if (this.versionToLaunch == "<Latest Snapshot>") {
+		if (this.versionToLaunch.equals("<Latest Snapshot>")) {
 			this.versionToLaunch = GetMinecraftVersions.getLatestSnapshot();
 		}
 		if (this.RAMinitHeap == null || this.RAMmaxHeap == null) {
@@ -77,11 +76,17 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		if (shouldFixProfile) {
 			LauncherConfig.addProfileFromJSON(profileJSON);
 		}
+		dwl.start();
+		/*
 		try {
 			this.launch();
 		} catch (Exception e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "LaunchMinecraft()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
+		*/
 
 	}
 
@@ -106,6 +111,13 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 	 * @throws Exception Thrown in case launching doesn't work
 	 */
 	public void launch() throws Exception {
+		/*
+		while (dwl.isAlive() && iversionToLaunch == null) {
+			System.out.println("Looking for Version to launch...");
+		}
+		*/
+
+		
 		MinecraftInstance mc = new MinecraftInstance(this.gameDir);
 
 		ISession session = this.login(mc);
@@ -191,7 +203,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 			try {
 				this.launch();
 			} catch (Exception e) {
-				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "onUpdate()");
+				new ErrorGUI(e);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package io.github.podshot.Podlauncher.files;
 
+import io.github.podshot.Podlauncher.PodLauncher;
 import io.github.podshot.Podlauncher.extras.Music;
 import io.github.podshot.Podlauncher.extras.Utility;
 import io.github.podshot.Podlauncher.extras.Utility.UtilityType;
@@ -31,8 +32,10 @@ public class LauncherConfig {
 			try {
 				launcherConfig.createNewFile();
 			} catch (IOException e) {
-				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "checkForFile()");
-				e.printStackTrace();
+				new ErrorGUI(e);
+				if (PodLauncher.isDevMode()) {
+					e.printStackTrace();
+				}
 			}
 
 			JSONObject mainJSON = new JSONObject();
@@ -44,7 +47,10 @@ public class LauncherConfig {
 			try {
 				writeToFile(mainJSON.toJSONString());
 			} catch (IOException e) {
-				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "checkForFile()");
+				new ErrorGUI(e);
+				if (PodLauncher.isDevMode()) {
+					e.printStackTrace();
+				}
 			}
 
 		}
@@ -83,7 +89,10 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			System.out.println("Could not read config.json");
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "addProfile()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 		JSONArray profileList = (JSONArray) launcherJSON.get("Profiles");
@@ -101,6 +110,7 @@ public class LauncherConfig {
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
+			new ErrorGUI(e);
 			e.printStackTrace();
 		}
 	}
@@ -115,7 +125,10 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "addProfileFromJSON()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 		JSONArray profileArray = (JSONArray) launcherJSON.get("Profiles");
@@ -130,8 +143,10 @@ public class LauncherConfig {
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "addProfileFromJSON()");
-			e.printStackTrace();
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -154,7 +169,10 @@ public class LauncherConfig {
 		try {
 			json = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getProfiles()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 		String lastProfile = (String) json.get("Last Profile");
@@ -191,7 +209,10 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getProfile()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 		JSONArray profiles = (JSONArray) launcherJSON.get("Profiles");
@@ -210,7 +231,10 @@ public class LauncherConfig {
 			try {
 				writeToFile(launcherJSON.toJSONString());
 			} catch (IOException e) {
-				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getProfile()");
+				new ErrorGUI(e);
+				if (PodLauncher.isDevMode()) {
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -226,7 +250,10 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "updateLastProfile()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 		launcherJSON.remove("Last Profile");
@@ -235,7 +262,10 @@ public class LauncherConfig {
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "updateLastProfile()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -263,11 +293,18 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "shouldUseCanidateBuilds()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
-		boolean shouldUseCanidate = (boolean)launcherJSON.get("Use Canidate Builds");
-		return shouldUseCanidate;
+		String shouldUseCanidateSTR = (String) launcherJSON.get("Use Canidate Builds");
+		boolean shouldUseCanidateBOOL = false;
+		if (shouldUseCanidateSTR.equals("true")) {
+			shouldUseCanidateBOOL = true;
+		}
+		return shouldUseCanidateBOOL;
 	}
 
 	/**
@@ -279,18 +316,28 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "setUseCanidateBuilds()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 		if (launcherJSON.containsKey("Use Canidate Builds")) {
 			launcherJSON.remove("Use Canidate Builds");
 		}
-		launcherJSON.put("Use Canidate Builds", bool);
+		//launcherJSON.put("Use Canidate Builds", bool);
+		if (bool) {
+			launcherJSON.put("Use Canidate Builds", "true");
+		} else {
+			launcherJSON.put("Use Canidate Builds", "false");
+		}
 		try {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "setUseCanidateBuilds()");
-			e.printStackTrace();
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -325,7 +372,10 @@ public class LauncherConfig {
 		try {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getActiveLauncherConfigVersion()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 		if (launcherJSON.containsKey("Launcher Config Version")) {
 			int configVersion = (int) launcherJSON.get("Launcher Config Version");
@@ -335,7 +385,10 @@ public class LauncherConfig {
 			try {
 				writeToFile(launcherJSON.toJSONString());
 			} catch (IOException e) {
-				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getActiveLauncherConfigVersion()");
+				new ErrorGUI(e);
+				if (PodLauncher.isDevMode()) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return getCurrentLauncherConfigVersion();

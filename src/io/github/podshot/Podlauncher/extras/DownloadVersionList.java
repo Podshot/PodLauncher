@@ -1,5 +1,6 @@
 package io.github.podshot.Podlauncher.extras;
 
+import io.github.podshot.Podlauncher.PodLauncher;
 import io.github.podshot.Podlauncher.gui.ErrorGUI;
 import sk.tomsik68.mclauncher.api.common.IObservable;
 import sk.tomsik68.mclauncher.api.common.IObserver;
@@ -17,8 +18,10 @@ public class DownloadVersionList extends Thread implements IObservable<IVersion>
 		try {
 			list.startDownload();
 		} catch (Exception e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "run()");
-			e.printStackTrace();
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 	}
 

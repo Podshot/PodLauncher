@@ -1,5 +1,6 @@
 package io.github.podshot.Podlauncher.extras;
 
+import io.github.podshot.Podlauncher.PodLauncher;
 import io.github.podshot.Podlauncher.UpdateChecker;
 import io.github.podshot.Podlauncher.gui.ErrorGUI;
 
@@ -29,13 +30,18 @@ public class DownloadUpdater {
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.close();
 		} catch (IOException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "download()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 		try {
 			run();
 		} catch (IOException e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "download()");
-			e.printStackTrace();
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -47,8 +53,8 @@ public class DownloadUpdater {
 		if (UpdateChecker.isACanidateUpdate()) {
 			arguments.add("-canidate");
 		}
-		
-		
+
+
 		ProcessBuilder pb = new ProcessBuilder(arguments);
 		pb.start();
 
@@ -58,7 +64,7 @@ public class DownloadUpdater {
 		} else {
 			Process proc = runtime.exec("java -jar \"PodLauncher" + File.separator + "update" + File.separator + "Updater.jar\"");
 		}
-		*/
+		 */
 		System.exit(0);
 
 	}

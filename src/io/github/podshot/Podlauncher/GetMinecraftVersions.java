@@ -20,6 +20,7 @@ public class GetMinecraftVersions {
 	 * @return An array of profile name strings
 	 */
 	public static String[] getStrings() {
+		// Converts a String array into a String List
 		return allVersions.toArray(new String[allVersions.size()]);
 	}
 	
@@ -30,7 +31,10 @@ public class GetMinecraftVersions {
 		try {
 			versionJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
 		} catch (Exception e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getLatestRelease()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 		JSONObject latestJSONOBJ = (JSONObject) versionJSON.get("latest");
 		
@@ -44,7 +48,10 @@ public class GetMinecraftVersions {
 		try {
 			versionJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
 		} catch (Exception e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "getLatestRelease()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 		JSONObject latestJSONOBJ = (JSONObject) versionJSON.get("latest");
 		
@@ -60,7 +67,10 @@ public class GetMinecraftVersions {
 		try {
 			versionsJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
 		} catch (Exception e) {
-			new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "setup()");
+			new ErrorGUI(e);
+			if (PodLauncher.isDevMode()) {
+				e.printStackTrace();
+			}
 		}
 
 		JSONArray versions = (JSONArray) versionsJSON.get("versions");
