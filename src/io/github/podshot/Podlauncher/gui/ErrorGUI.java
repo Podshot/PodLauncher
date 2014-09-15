@@ -1,7 +1,5 @@
 package io.github.podshot.Podlauncher.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class ErrorGUI extends JFrame implements ActionListener {
+public class ErrorGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -66,10 +64,5 @@ public class ErrorGUI extends JFrame implements ActionListener {
 		this.setSize(411, 141);
 		this.setAlwaysOnTop(true);
 		this.setVisible(true);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-
 	}
 }
