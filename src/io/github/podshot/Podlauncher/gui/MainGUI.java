@@ -41,6 +41,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	private ImageIcon ONLINE = new ImageIcon(this.getClass().getResource("/images/online-32x32.png"));
 	private ImageIcon UNSTABLE = new ImageIcon(this.getClass().getResource("/images/unstable-32x32.png"));
 	private ImageIcon OFFLINE = new ImageIcon(this.getClass().getResource("/images/offline-32x32.png"));
+	private ImageIcon LAUNCHERICON = new ImageIcon(this.getClass().getResource("/images/online-32x32.png"));
 	private JButton btnEditProfile;
 	private JButton btnLaunchProfile;
 	private JProgressBar progressBar;
@@ -61,6 +62,8 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 		this.setSize(614, 420);
+		this.setResizable(false);
+		this.setIconImage(this.LAUNCHERICON.getImage());
 
 		panel = new JPanel();
 		panel.setBounds(0, 0, 614, 420);
@@ -75,17 +78,17 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 
 		// Sets up the Create profile button
 		btnCreateANew = new JButton("Create a new Profile");
-		btnCreateANew.setBounds(260, 29, 160, 23);
+		btnCreateANew.setBounds(10, 70, 160, 23);
 		btnCreateANew.addActionListener(this);
 		panel.add(btnCreateANew);
 
 		btnEditProfile = new JButton("Edit Profile");
-		btnEditProfile.setBounds(430, 29, 130, 23);
+		btnEditProfile.setBounds(180, 70, 130, 23);
 		btnEditProfile.addActionListener(this);
 		panel.add(btnEditProfile);
 
 		btnLaunchProfile = new JButton("Launch Profile");
-		btnLaunchProfile.setBounds(10, 70, 130, 23);
+		btnLaunchProfile.setBounds(10, 115, 130, 23);
 		btnLaunchProfile.addActionListener(this);
 		panel.add(btnLaunchProfile);
 
@@ -97,7 +100,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		// Launching progressbar, not visible until a profile is launched
 		progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
-		progressBar.setBounds(73, 130, 380, 20);
+		progressBar.setBounds(320, 71, 250, 23);
 		progressBar.setVisible(false);
 		panel.add(progressBar);
 
@@ -106,22 +109,22 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		chckbxUseCanidateBuilds.setHorizontalAlignment(SwingConstants.CENTER);
 		chckbxUseCanidateBuilds.addItemListener(this);
 		chckbxUseCanidateBuilds.setSelected(LauncherConfig.shouldUseCanidateBuilds());
-		chckbxUseCanidateBuilds.setBounds(260, 346, 230, 23);
+		chckbxUseCanidateBuilds.setBounds(229, 346, 230, 23);
 		panel.add(chckbxUseCanidateBuilds);
 		
 
 		btnRemoveProfile = new JButton("Remove Profile");
-		btnRemoveProfile.setBounds(260, 70, 130, 23);
+		btnRemoveProfile.setBounds(250, 115, 130, 23);
 		btnRemoveProfile.addActionListener(this);
 		panel.add(btnRemoveProfile);
 		
 		btnAboutPodlauncher = new JButton("About PodLauncher");
-		btnAboutPodlauncher.setBounds(400, 70, 160, 23);
+		btnAboutPodlauncher.setBounds(465, 346, 139, 23);
 		btnAboutPodlauncher.addActionListener(this);
 		panel.add(btnAboutPodlauncher);
 		
 		btnZipProfile = new JButton("Zip Profile");
-		btnZipProfile.setBounds(151, 70, 89, 23);
+		btnZipProfile.setBounds(151, 115, 89, 23);
 		btnZipProfile.addActionListener(this);
 		panel.add(btnZipProfile);
 
