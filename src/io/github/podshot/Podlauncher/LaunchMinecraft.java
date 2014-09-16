@@ -27,7 +27,6 @@ import sk.tomsik68.mclauncher.impl.login.yggdrasil.YDLoginService;
 public class LaunchMinecraft implements IObserver<IVersion> {
 
 	private String versionToLaunch;
-	private IVersion iversionToLaunch;
 	private String username;
 	private File gameDir;
 	private String password;
@@ -44,7 +43,6 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		boolean shouldFixProfile = false;
 		dwl = new DownloadVersionList();
 		dwl.addObserver(this);
-
 
 		LauncherConfig.updateLastProfile(profile);
 
@@ -86,7 +84,7 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 				e.printStackTrace();
 			}
 		}
-		*/
+		 */
 
 	}
 
@@ -108,21 +106,22 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 
 	/**
 	 * Launch method to launch the entire game
+	 * @param ver 
 	 * @throws Exception Thrown in case launching doesn't work
 	 */
-	public void launch() throws Exception {
+	public void launch(IVersion ver) throws Exception {
 		/*
 		while (dwl.isAlive() && iversionToLaunch == null) {
 			System.out.println("Looking for Version to launch...");
 		}
-		*/
+		 */
 
-		
+
 		MinecraftInstance mc = new MinecraftInstance(this.gameDir);
 
 		ISession session = this.login(mc);
-		iversionToLaunch.getInstaller().install(iversionToLaunch, mc, MainGUI.getInstance());
-		Process proc = iversionToLaunch.getLauncher().launch(session, mc, null, iversionToLaunch, new ILaunchSettings() {
+		ver.getInstaller().install(ver, mc, MainGUI.getInstance());
+		Process proc = ver.getLauncher().launch(session, mc, null, ver, new ILaunchSettings() {
 
 			@Override
 			public List<String> getCommandPrefix() {
@@ -170,11 +169,11 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 		while (isProcessAlive(proc)) {  
 			String line = br.readLine();  
 			if (line != null && line.length() > 0) {
+				System.out.println(line);
 				if (line.contains("textures-atlas")) {
 					br.close();
 					System.exit(0);
-				}
-				System.out.println(line);  
+				}  
 			}
 		}
 	}
@@ -197,11 +196,10 @@ public class LaunchMinecraft implements IObserver<IVersion> {
 	 * Gets all available versions to launch
 	 */
 	@Override
-	public void onUpdate(IObservable<IVersion> arg0, IVersion arg1) {
-		if (arg1.getId().equals(this.versionToLaunch)) {
-			this.iversionToLaunch = arg1;
+	public void onUpdate(IObservable<IVersion> arg0, IVersion ver) {
+		if (ver.getId().equals(this.versionToLaunch)) {
 			try {
-				this.launch();
+				this.launch(ver);
 			} catch (Exception e) {
 				new ErrorGUI(e);
 			}
