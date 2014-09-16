@@ -37,6 +37,7 @@ public class ProfileZipper {
 				File savesDir = new File(gameDir + File.separator + "saves");
 				File resourcePacksDir = new File(gameDir + File.separator + "resourcepacks");
 				File serverDat = new File(gameDir + File.separator + "servers.dat");
+				File screenshotDir = new File(gameDir + File.separator + "screenshots");
 				if (savesDir.exists()) {
 					zipFile.addFolder(savesDir, params);
 				}
@@ -46,9 +47,14 @@ public class ProfileZipper {
 				if (serverDat.exists()) {
 					zipFile.addFile(serverDat, params);
 				}
+				if (screenshotDir.exists()) {
+					zipFile.addFolder(screenshotDir, params);
+				}
 			} catch (ZipException e) {
-				new ErrorGUI(e.getMessage(), e.getStackTrace(), e.getCause(), "PorfileZipper()");
-				e.printStackTrace();
+				new ErrorGUI(e);
+				if (PodLauncher.isDevMode()) {
+					e.printStackTrace();
+				}
 			}
 			if (PodLauncher.inDebugMode()) {
 				System.out.println("Finished Zipping");
