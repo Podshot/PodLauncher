@@ -3,6 +3,8 @@ package io.github.podshot.Podlauncher.gui;
 import io.github.podshot.Podlauncher.LaunchMinecraft;
 import io.github.podshot.Podlauncher.PodLauncher;
 import io.github.podshot.Podlauncher.extras.CheckMojangServers;
+import io.github.podshot.Podlauncher.extras.Utility;
+import io.github.podshot.Podlauncher.extras.Utility.UtilityType;
 import io.github.podshot.Podlauncher.files.LauncherConfig;
 import io.github.podshot.Podlauncher.files.ProfileZipper;
 
@@ -26,8 +28,10 @@ import javax.swing.SwingConstants;
 import org.json.simple.JSONObject;
 
 import sk.tomsik68.mclauncher.api.ui.IProgressMonitor;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
-public class MainGUI extends JFrame implements ActionListener, IProgressMonitor, ItemListener {
+public final class MainGUI extends JFrame implements ActionListener, IProgressMonitor, ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	private static MainGUI instance;
@@ -56,13 +60,13 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 	 * MainGUI constructor
 	 */
 	public MainGUI() {
+		setResizable(false);
 		// Binds the instance to the static field 'instance'
 		instance = this;
 		this.setTitle("PodLauncher");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 		this.setSize(614, 420);
-		this.setResizable(false);
 		this.setIconImage(this.LAUNCHERICON.getImage());
 
 		panel = new JPanel();
@@ -127,6 +131,7 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		btnZipProfile.setBounds(151, 115, 89, 23);
 		btnZipProfile.addActionListener(this);
 		panel.add(btnZipProfile);
+		getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{profileComboBox, btnLaunchProfile, btnCreateANew, btnEditProfile, btnZipProfile, btnRemoveProfile, btnAboutPodlauncher, chckbxUseCanidateBuilds}));
 
 		// Switch statement for Mojang Server Status indicators
 		// This is snippet is repeated multiple times
@@ -369,5 +374,14 @@ public class MainGUI extends JFrame implements ActionListener, IProgressMonitor,
 		if (evt.getItem() == this.chckbxUseCanidateBuilds) {
 			LauncherConfig.setUseCanidateBuilds(this.chckbxUseCanidateBuilds.isSelected());
 		}
+	}
+
+	/**
+	 * Method to reset the Launch Profile Button after a failed Minecraft launch
+	 */
+	@Utility(UtilityType.QUICK_FIX)
+	public void resetLaunchProfileButton() {
+		this.btnLaunchProfile.addActionListener(this);
+		this.btnLaunchProfile.setEnabled(true);
 	}
 }
