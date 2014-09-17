@@ -19,14 +19,22 @@ public class PodLauncher {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
+		// Start System.out wrapper
 		System.setOut(new PrintStream(System.out) {
+			// Sets the Out stream to pass through this inner class
 			public void println(String s) {
+				// Most commonly used PrintStream method
 				if (s.equals("Error: Could not find or load main class net.minecraft.client.main.Main")) {
+					// Check if the message matches a common error
 					MainGUI.getInstance().resetLaunchProfileButton();
+					// Re-enables the Launch Profile Button (since I disable it when it is first clicked)
 				}
 				super.println(s);
+				// Calls the original PrintStream so the message is still printed to the console
 			}
 		});
+		// End System.out wrapper
+		
 		// Sets the UI Look and Feel from Java's default layout to the OS specific one
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
