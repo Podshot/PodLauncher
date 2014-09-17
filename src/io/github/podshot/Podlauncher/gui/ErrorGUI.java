@@ -22,6 +22,8 @@ public class ErrorGUI extends JFrame {
 	 * @param e The Exception that was thrown
 	 */
 	public ErrorGUI(Exception e) {
+		this.setAutoRequestFocus(true);
+		this.setIconImage(MainGUI.getInstance().getIconImage());
 		if (PodLauncher.isDevMode()) {
 			e.printStackTrace();
 			return;
