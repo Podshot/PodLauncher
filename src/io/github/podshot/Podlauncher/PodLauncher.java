@@ -23,9 +23,6 @@ public class PodLauncher {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 		// Loops through the specified arguments
 		for (String argument : args) {
@@ -39,9 +36,6 @@ public class PodLauncher {
 			new UpdateChecker();
 		} catch (Exception e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 		// Checks to see if the folder 'PodLauncher' exists in the current working directory
 		// If not create the folder

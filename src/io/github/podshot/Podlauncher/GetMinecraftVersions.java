@@ -32,9 +32,6 @@ public class GetMinecraftVersions {
 			versionJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
 		} catch (Exception e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 		JSONObject latestJSONOBJ = (JSONObject) versionJSON.get("latest");
 		
@@ -49,9 +46,6 @@ public class GetMinecraftVersions {
 			versionJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
 		} catch (Exception e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 		JSONObject latestJSONOBJ = (JSONObject) versionJSON.get("latest");
 		
@@ -68,9 +62,6 @@ public class GetMinecraftVersions {
 			versionsJSON = (JSONObject) parser.parse(HttpUtils.httpGet("http://s3.amazonaws.com/Minecraft.Download/versions/versions.json"));
 		} catch (Exception e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 		JSONArray versions = (JSONArray) versionsJSON.get("versions");

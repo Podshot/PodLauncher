@@ -33,9 +33,6 @@ public class LauncherConfig {
 				launcherConfig.createNewFile();
 			} catch (IOException e) {
 				new ErrorGUI(e);
-				if (PodLauncher.isDevMode()) {
-					e.printStackTrace();
-				}
 			}
 
 			JSONObject mainJSON = new JSONObject();
@@ -48,9 +45,6 @@ public class LauncherConfig {
 				writeToFile(mainJSON.toJSONString());
 			} catch (IOException e) {
 				new ErrorGUI(e);
-				if (PodLauncher.isDevMode()) {
-					e.printStackTrace();
-				}
 			}
 
 		}
@@ -126,9 +120,6 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 		JSONArray profileArray = (JSONArray) launcherJSON.get("Profiles");
@@ -144,9 +135,6 @@ public class LauncherConfig {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -170,9 +158,6 @@ public class LauncherConfig {
 			json = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 		String lastProfile = (String) json.get("Last Profile");
@@ -210,9 +195,6 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 		JSONArray profiles = (JSONArray) launcherJSON.get("Profiles");
@@ -232,9 +214,6 @@ public class LauncherConfig {
 				writeToFile(launcherJSON.toJSONString());
 			} catch (IOException e) {
 				new ErrorGUI(e);
-				if (PodLauncher.isDevMode()) {
-					e.printStackTrace();
-				}
 			}
 		}
 
@@ -251,9 +230,6 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 		launcherJSON.remove("Last Profile");
@@ -263,9 +239,6 @@ public class LauncherConfig {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 	}
@@ -294,9 +267,6 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 		String shouldUseCanidateSTR = (String) launcherJSON.get("Use Canidate Builds");
@@ -317,9 +287,6 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 
 		if (launcherJSON.containsKey("Use Canidate Builds")) {
@@ -335,9 +302,6 @@ public class LauncherConfig {
 			writeToFile(launcherJSON.toJSONString());
 		} catch (IOException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -373,9 +337,6 @@ public class LauncherConfig {
 			launcherJSON = (JSONObject) parser.parse(new FileReader("PodLauncher" + File.separator + "config.json"));
 		} catch (IOException | ParseException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 		if (launcherJSON.containsKey("Launcher Config Version")) {
 			int configVersion = (int) launcherJSON.get("Launcher Config Version");
@@ -386,9 +347,6 @@ public class LauncherConfig {
 				writeToFile(launcherJSON.toJSONString());
 			} catch (IOException e) {
 				new ErrorGUI(e);
-				if (PodLauncher.isDevMode()) {
-					e.printStackTrace();
-				}
 			}
 		}
 		return getCurrentLauncherConfigVersion();

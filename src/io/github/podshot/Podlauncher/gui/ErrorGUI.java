@@ -1,5 +1,7 @@
 package io.github.podshot.Podlauncher.gui;
 
+import io.github.podshot.Podlauncher.PodLauncher;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,6 +22,10 @@ public class ErrorGUI extends JFrame {
 	 * @param e The Exception that was thrown
 	 */
 	public ErrorGUI(Exception e) {
+		if (PodLauncher.isDevMode()) {
+			e.printStackTrace();
+			return;
+		}
 		// Gets the current date and time, so I can format the log file name
 		Calendar cal = Calendar.getInstance();
 		java.util.Date now = cal.getTime();

@@ -52,9 +52,6 @@ public class ProfileZipper {
 				}
 			} catch (ZipException e) {
 				new ErrorGUI(e);
-				if (PodLauncher.isDevMode()) {
-					e.printStackTrace();
-				}
 			}
 			if (PodLauncher.inDebugMode()) {
 				System.out.println("Finished Zipping");

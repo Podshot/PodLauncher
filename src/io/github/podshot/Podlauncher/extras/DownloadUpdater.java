@@ -1,6 +1,5 @@
 package io.github.podshot.Podlauncher.extras;
 
-import io.github.podshot.Podlauncher.PodLauncher;
 import io.github.podshot.Podlauncher.UpdateChecker;
 import io.github.podshot.Podlauncher.gui.ErrorGUI;
 
@@ -31,17 +30,11 @@ public class DownloadUpdater {
 			fos.close();
 		} catch (IOException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 		try {
 			run();
 		} catch (IOException e) {
 			new ErrorGUI(e);
-			if (PodLauncher.isDevMode()) {
-				e.printStackTrace();
-			}
 		}
 	}
 
