@@ -6,6 +6,7 @@ import io.github.podshot.Podlauncher.gui.ErrorGUI;
 import io.github.podshot.Podlauncher.gui.MainGUI;
 
 import java.io.File;
+import java.io.PrintStream;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -18,6 +19,14 @@ public class PodLauncher {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
+		System.setOut(new PrintStream(System.out) {
+			public void println(String s) {
+				if (s.equals("Error: Could not find or load main class net.minecraft.client.main.Main")) {
+					MainGUI.getInstance().resetLaunchProfileButton();
+				}
+				super.println(s);
+			}
+		});
 		// Sets the UI Look and Feel from Java's default layout to the OS specific one
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
