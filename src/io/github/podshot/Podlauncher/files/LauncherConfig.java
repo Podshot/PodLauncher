@@ -292,7 +292,6 @@ public class LauncherConfig {
 		if (launcherJSON.containsKey("Use Canidate Builds")) {
 			launcherJSON.remove("Use Canidate Builds");
 		}
-		//launcherJSON.put("Use Canidate Builds", bool);
 		if (bool) {
 			launcherJSON.put("Use Canidate Builds", "true");
 		} else {
@@ -308,7 +307,7 @@ public class LauncherConfig {
 	/**
 	 * Gets the Game Type of the specified profile
 	 * @param string The profile name to get the Game Type of
-	 * @return When Forge compatability is complete, this will either return 'VANILLA' or 'FORGE'
+	 * @return When Forge compatibility is complete, this will either return 'VANILLA' or 'FORGE'
 	 */
 	@Utility(UtilityType.COMPATIBILITY)
 	public static String getGameType(String string) {

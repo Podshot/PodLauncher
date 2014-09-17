@@ -60,7 +60,6 @@ public final class MainGUI extends JFrame implements ActionListener, IProgressMo
 	 * MainGUI constructor
 	 */
 	public MainGUI() {
-		setResizable(false);
 		// Binds the instance to the static field 'instance'
 		instance = this;
 		this.setTitle("PodLauncher");
@@ -68,6 +67,7 @@ public final class MainGUI extends JFrame implements ActionListener, IProgressMo
 		this.getContentPane().setLayout(null);
 		this.setSize(614, 420);
 		this.setIconImage(this.LAUNCHERICON.getImage());
+		this.setResizable(false);
 
 		panel = new JPanel();
 		panel.setBounds(0, 0, 614, 420);
